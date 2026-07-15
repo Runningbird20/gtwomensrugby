@@ -1,36 +1,29 @@
+import { Route, Routes } from 'react-router-dom'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Home from './pages/Home'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Schedule from './pages/Schedule'
+import Alumni from './pages/Alumni'
 import './App.css'
 
 function App() {
   return (
     <>
-      <header className="site-header">
-        <div className="site-header__inner">
-          <span className="site-header__brand">GT Women's Rugby</span>
-          <nav className="site-nav">
-            <a href="#schedule">Schedule</a>
-            <a href="#roster">Roster</a>
-            <a href="#news">News</a>
-            <a href="#join">Join the Team</a>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       <main>
-        <section className="hero">
-          <h1>Georgia Tech Women's Rugby</h1>
-          <p>A student-run club sport at the Georgia Institute of Technology.</p>
-          <a className="button button--primary" href="#join">
-            Join the Team
-          </a>
-        </section>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/alumni" element={<Alumni />} />
+        </Routes>
       </main>
 
-      <footer className="site-footer">
-        <p>Georgia Tech Women's Rugby &mdash; Club Sport</p>
-        <p className="site-footer__disclaimer">
-          Not affiliated with Georgia Tech Athletics.
-        </p>
-      </footer>
+      <Footer />
     </>
   )
 }
