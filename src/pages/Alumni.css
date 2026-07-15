@@ -1,0 +1,122 @@
+.alumni-hint {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.alumni-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.alumni-card {
+  --hover-color: var(--gt-gold);
+
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  perspective: 1000px;
+  height: 290px;
+}
+
+.alumni-card:hover {
+  --card-shadow: 0 8px 20px -8px var(--hover-color);
+}
+
+.alumni-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s ease, box-shadow 0.25s ease, border-color 0.25s ease, translate 0.25s ease;
+  transform-style: preserve-3d;
+}
+
+.alumni-card:hover .alumni-card__inner {
+  translate: 0 -4px;
+}
+
+.alumni-card__inner--flipped {
+  transform: rotateY(180deg);
+}
+
+.alumni-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.alumni-card:hover .alumni-card__face {
+  border-color: var(--hover-color);
+  box-shadow: 0 8px 20px -8px var(--hover-color);
+}
+
+.alumni-card__face--back {
+  transform: rotateY(180deg);
+}
+
+.alumni-card__photo {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: var(--color-bg-alt);
+  border: 2px solid var(--color-border);
+  object-fit: cover;
+  display: block;
+  transition: border-color 0.25s ease;
+}
+
+.alumni-card:hover .alumni-card__photo {
+  border-color: var(--hover-color);
+}
+
+.alumni-card__years {
+  color: var(--gt-dark-gold);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+.alumni-card__class {
+  font-weight: 500;
+  margin: 0 0 0.25rem;
+}
+
+.alumni-card__position {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.alumni-card__name {
+  margin-bottom: 0.5rem;
+}
+
+.alumni-card__face--front .alumni-card__name {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.alumni-card__bio {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  max-width: none;
+  margin: 0;
+}
