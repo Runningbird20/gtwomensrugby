@@ -6,7 +6,10 @@ const navItems = [
   { label: 'About Us', to: '/about' },
   { label: 'Contact', to: '/contact' },
   { label: 'Schedule', to: '/schedule' },
-  { label: 'Alumni', to: '/alumni' },
+]
+
+const alumniSubItems = [
+  { label: '20th Anniversary', to: '/alumni/20th-anniversary' },
 ]
 
 function Header() {
@@ -29,6 +32,34 @@ function Header() {
               {item.label}
             </NavLink>
           ))}
+
+          <div className="site-nav__dropdown">
+            <NavLink
+              to="/alumni"
+              end
+              className={({ isActive }) =>
+                isActive ? 'site-nav__link site-nav__link--active' : 'site-nav__link'
+              }
+            >
+              Alumni
+            </NavLink>
+            <ul className="site-nav__dropdown-menu">
+              {alumniSubItems.map((item) => (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'site-nav__dropdown-link site-nav__dropdown-link--active'
+                        : 'site-nav__dropdown-link'
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
         </nav>
       </div>
     </header>

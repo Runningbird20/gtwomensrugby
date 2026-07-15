@@ -1,0 +1,61 @@
+.photo-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  margin: 2rem auto 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 12px 28px -12px rgba(5, 30, 57, 0.35);
+}
+
+.photo-carousel__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-carousel__slide--active {
+  transform: translateX(0);
+  transition: transform 0.7s ease;
+}
+
+.photo-carousel__slide--prev {
+  transform: translateX(-100%);
+  transition: transform 0.7s ease;
+}
+
+/* Off-cycle slides snap straight to the right-hand starting point with no
+   transition, so they never visibly slide across the frame except during
+   their one active entrance/exit. */
+.photo-carousel__slide--idle {
+  transform: translateX(100%);
+  transition: none;
+}
+
+.photo-carousel__dots {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 1;
+}
+
+.photo-carousel__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.photo-carousel__dot--active {
+  background: var(--gt-gold);
+}

@@ -1,0 +1,94 @@
+.anniversary-schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.anniversary-schedule__item {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--gt-gold);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.anniversary-schedule__main {
+  flex: 1 1 240px;
+}
+
+.anniversary-schedule__date {
+  color: var(--gt-dark-gold);
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+.anniversary-schedule__title {
+  margin-bottom: 0.75rem;
+}
+
+.anniversary-schedule__details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.anniversary-schedule__details li {
+  margin-bottom: 0.25rem;
+}
+
+.anniversary-schedule__summary {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin: 0.75rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.anniversary-schedule__payment {
+  flex: 0 0 200px;
+  text-align: center;
+  padding: 1rem;
+  border: 1px dashed var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg-alt);
+}
+
+.anniversary-schedule__payment-label {
+  color: var(--gt-dark-gold);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.anniversary-schedule__payment-button {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: var(--gt-navy);
+  color: var(--color-nav-text);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.anniversary-schedule__payment-note {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  margin: 0.5rem 0 0;
+}

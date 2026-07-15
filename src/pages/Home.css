@@ -1,0 +1,61 @@
+.home-practice {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.home-practice__list {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.home-practice__list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.home-practice__list li:last-child {
+  border-bottom: none;
+}
+
+.home-practice__day {
+  font-weight: 700;
+  color: var(--color-heading);
+  min-width: 90px;
+}
+
+.home-practice__time {
+  color: var(--gt-dark-gold);
+  font-weight: 500;
+}
+
+.home-practice__location {
+  color: var(--color-text-muted);
+}
+
+.home-practice__link {
+  display: inline-block;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.home-motivation {
+  max-width: 42rem;
+  margin: 3rem auto 0;
+  padding: 1.5rem;
+  border-left: 4px solid var(--gt-gold);
+  background: var(--color-bg-alt);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-heading);
+  text-align: left;
+}

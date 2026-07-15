@@ -1,0 +1,32 @@
+.editable-field {
+  cursor: pointer;
+  border-bottom: 1px dashed transparent;
+  border-radius: 2px;
+  padding: 0.1rem 0.2rem;
+  margin: -0.1rem -0.2rem;
+}
+
+.editable-field:hover,
+.editable-field:focus-visible {
+  border-bottom-color: var(--gt-gold);
+  background: rgba(179, 144, 81, 0.08);
+  outline: none;
+}
+
+.editable-field__placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+input.editable-field--input {
+  font: inherit;
+  color: inherit;
+  width: 100%;
+  padding: 0.1rem 0.2rem;
+  margin: -0.1rem -0.2rem;
+  border: none;
+  border-bottom: 1px solid var(--gt-gold);
+  border-radius: 2px;
+  background: rgba(179, 144, 81, 0.08);
+  outline: none;
+}
