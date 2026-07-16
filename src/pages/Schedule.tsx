@@ -14,11 +14,28 @@ function Schedule() {
   const content = useSiteContent()
   const practices = usePractices()
   const games = useGames()
+  const nextMatch = games.find((game) => game.status === 'Upcoming')
 
   return (
     <section className="page">
       <h1>Schedule</h1>
       <p>{content['schedule.intro']}</p>
+
+      {nextMatch && (
+        <div className="next-match">
+          <p className="next-match__label">Next Match</p>
+          <h2 className="next-match__opponent">
+            {nextMatch.is_home ? 'vs.' : '@'} {nextMatch.opponent}
+          </h2>
+          <div className="next-match__details">
+            <span>{nextMatch.date}</span>
+            <span aria-hidden="true">·</span>
+            <span>{nextMatch.time}</span>
+            <span aria-hidden="true">·</span>
+            <span>{nextMatch.location}</span>
+          </div>
+        </div>
+      )}
 
       <div className="schedule-section-heading">
         <h2>{content['schedule.practice_heading']}</h2>

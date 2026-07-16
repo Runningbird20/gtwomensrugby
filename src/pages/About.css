@@ -1,43 +1,85 @@
+.about-statement {
+  position: relative;
+  background: url('/about-us-bg.JPG') center 45% / cover no-repeat;
+  padding: var(--space-section) 1.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Navy wash over the photo so the statement text stays readable. */
+.about-statement::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 30, 57, 0.65);
+  pointer-events: none;
+}
+
+.about-statement__line {
+  position: relative;
+  font-family: var(--font-heading);
+  font-weight: 750;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--gt-white);
+  margin: 0;
+}
+
+.about-statement__line--outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--gt-white);
+}
+
+.about-statement__line--gold {
+  color: var(--gt-gold);
+}
+
 .page h2 {
-  margin-top: 3rem;
+  margin-top: var(--space-section);
 }
 
 .people-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1.5rem;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
 }
 
 .people-card {
   background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 1.25rem;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 1.75rem 1.5rem;
   text-align: center;
+  transition: transform var(--motion-base), box-shadow var(--motion-base);
+}
+
+.people-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .people-card__photo {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 1rem;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.1rem;
   border-radius: 50%;
   background: var(--color-bg-alt);
-  border: 2px solid var(--color-border);
   object-fit: cover;
   display: block;
 }
 
 .people-card__name {
   margin-bottom: 0.25rem;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
 }
 
 .people-card__role {
   color: var(--gt-dark-gold);
   font-weight: 500;
   font-size: 0.8rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   margin: 0;
 }

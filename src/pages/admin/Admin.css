@@ -72,7 +72,7 @@
 }
 
 .admin-layout__link:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(249, 246, 229, 0.08);
   text-decoration: none;
 }
 
@@ -343,7 +343,7 @@
 
 .admin-inline-select:hover,
 .admin-inline-select:focus-visible {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(249, 246, 229, 0.3);
   outline: none;
 }
 

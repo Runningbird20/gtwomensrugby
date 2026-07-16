@@ -25,19 +25,25 @@ function About() {
   const coaches = usePeople('coach')
   const executiveBoard = usePeople('exec_board')
   const content = useSiteContent()
-
   return (
-    <section className="page">
-      <h1>About Us</h1>
-      <p>{content['about.history_p1']}</p>
-      <p>{content['about.history_p2']}</p>
+    <>
+      <section className="about-statement">
+        <p className="about-statement__line about-statement__line--outline">This Is</p>
+        <p className="about-statement__line">Georgia Tech</p>
+        <p className="about-statement__line about-statement__line--gold">Women's Rugby</p>
+      </section>
+      <section className="page">
+        <h1>About Us</h1>
+        <p>{content['about.history_p1']}</p>
+        <p>{content['about.history_p2']}</p>
 
-      <h2>Coaches</h2>
-      <PersonGrid people={coaches} />
+        <h2>Coaches</h2>
+        <PersonGrid people={coaches} />
 
-      <h2>Executive Board</h2>
-      <PersonGrid people={executiveBoard} />
-    </section>
+        <h2>Executive Board</h2>
+        <PersonGrid people={executiveBoard} />
+      </section>
+    </>
   )
 }
 

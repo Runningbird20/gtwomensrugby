@@ -2,48 +2,66 @@ main {
   flex: 1;
 }
 
-.hero {
-  background: var(--color-bg-alt);
-  text-align: center;
-  padding: 6rem 1.5rem;
-}
-
-.hero p {
-  color: var(--color-text-muted);
-  font-size: 1.1rem;
-  max-width: 32rem;
-  margin: 0 auto 2rem;
+.hero__actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .page {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 4rem 1.5rem;
+  padding: var(--space-section) 1.5rem;
+}
+
+/* Zero-specificity default so any single class can recolor a paragraph. */
+:where(.page p) {
+  color: var(--color-text-muted);
 }
 
 .page p {
-  color: var(--color-text-muted);
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   max-width: 42rem;
 }
 
 .button {
-  display: inline-block;
-  padding: 0.75rem 1.75rem;
-  border-radius: 4px;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-btn);
+  border: none;
+  font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--motion-base), color var(--motion-base), transform var(--motion-fast), box-shadow var(--motion-base);
+}
+
+.button:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
 }
 
 .button--primary {
   background: var(--color-nav-bg);
   color: var(--color-nav-text);
-  transition: background-color 0.2s ease;
 }
 
 .button--primary:hover {
   background: var(--gt-dark-gold);
-  text-decoration: none;
+  box-shadow: 0 12px 24px -10px rgba(5, 30, 57, 0.5);
+}
+
+.button--secondary {
+  background: var(--gt-gold);
+  color: var(--gt-navy);
+}
+
+.button--secondary:hover {
+  background: var(--gt-dark-gold);
+  color: var(--gt-white);
+  box-shadow: 0 12px 24px -10px rgba(143, 113, 61, 0.5);
 }

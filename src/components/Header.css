@@ -1,12 +1,33 @@
 .site-header {
-  background: var(--color-nav-bg);
+  position: fixed;
+  top: 0.75rem;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  border-radius: 999px;
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  background: rgba(5, 30, 57, 0.75);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   color: var(--color-nav-text);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+}
+
+/* On small screens the nav wraps into a tall block: the full pill radius
+   turns into an egg shape, and a fixed overlay that tall would hide the
+   page — fall back to a sticky rounded rectangle that keeps its space. */
+@media (max-width: 900px) {
+  .site-header {
+    position: sticky;
+    margin: 0.75rem auto 0;
+    border-radius: 24px;
+  }
 }
 
 .site-header__inner {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 0.6rem 1rem 0.6rem 1.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,6 +40,7 @@
   font-weight: 700;
   font-size: 1.25rem;
   color: var(--gt-gold);
+  white-space: nowrap;
 }
 
 .site-header__brand:hover {
@@ -27,18 +49,23 @@
 
 .site-nav {
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
 }
 
 .site-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--color-nav-text);
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 0.9rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  padding-bottom: 0.25rem;
   border-bottom: 2px solid transparent;
+  transition: color var(--motion-fast), border-color var(--motion-fast);
 }
 
 .site-nav__link:hover {
@@ -51,8 +78,32 @@
   border-bottom-color: var(--gt-gold);
 }
 
+.site-nav__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  background: var(--gt-gold);
+  color: var(--gt-navy);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background-color var(--motion-base), color var(--motion-base), transform var(--motion-fast);
+}
+
+.site-nav__cta:hover {
+  background: var(--gt-dark-gold);
+  color: var(--gt-white);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
 .site-nav__dropdown {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .site-nav__dropdown-menu {
@@ -62,15 +113,15 @@
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 200px;
+  min-width: 210px;
   background: var(--gt-navy);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
   opacity: 0;
   visibility: hidden;
   transform: translateY(4px);
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  transition: opacity var(--motion-fast), transform var(--motion-fast), visibility var(--motion-fast);
   z-index: 20;
 }
 
@@ -83,7 +134,7 @@
 
 .site-nav__dropdown-link {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.1rem;
   color: var(--color-nav-text);
   font-family: var(--font-body);
   font-weight: 500;
@@ -91,11 +142,12 @@
   letter-spacing: 0.02em;
   text-transform: uppercase;
   white-space: nowrap;
+  transition: color var(--motion-fast), background-color var(--motion-fast);
 }
 
 .site-nav__dropdown-link:hover {
   color: var(--gt-gold);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(249, 246, 229, 0.06);
   text-decoration: none;
 }
 

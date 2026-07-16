@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import './Header.css'
 
 const navItems = [
@@ -19,6 +19,7 @@ function Header() {
         <NavLink to="/" className="site-header__brand">
           GT Women's Rugby
         </NavLink>
+
         <nav className="site-nav">
           {navItems.map((item) => (
             <NavLink
@@ -60,6 +61,10 @@ function Header() {
               ))}
             </ul>
           </div>
+
+          <Link className="site-nav__cta" to="/contact">
+            Join the Team
+          </Link>
         </nav>
       </div>
     </header>
