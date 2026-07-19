@@ -12,8 +12,6 @@ type NewGameDraft = {
   is_home: boolean
   time: string
   location: string
-  status: 'Win' | 'Loss' | 'Upcoming'
-  score: string
 }
 
 const emptyDraft: NewGameDraft = {
@@ -22,8 +20,6 @@ const emptyDraft: NewGameDraft = {
   is_home: true,
   time: '',
   location: defaultHomeLocation,
-  status: 'Upcoming',
-  score: '',
 }
 
 function withIsHomeLocation<T extends { is_home: boolean; location: string }>(draft: T, is_home: boolean): T {
@@ -33,12 +29,6 @@ function withIsHomeLocation<T extends { is_home: boolean; location: string }>(dr
   }
   const locationIsDefault = draft.location === defaultHomeLocation
   return { ...draft, is_home, location: locationIsDefault ? '' : draft.location }
-}
-
-function statusClass(status: Game['status']) {
-  if (status === 'Win') return 'schedule-badge schedule-badge--win'
-  if (status === 'Loss') return 'schedule-badge schedule-badge--loss'
-  return 'schedule-badge schedule-badge--upcoming'
 }
 
 function AdminGames() {
@@ -74,9 +64,12 @@ function AdminGames() {
 
   const handleAdd = async () => {
     if (!newRow.date.trim() || !newRow.opponent.trim() || !newRow.location.trim()) return
+    // Result tracking was removed from the UI; new games still store a
+    // status so the games table stays consistent.
     const { error } = await supabase.from('games').insert({
       ...newRow,
-      score: newRow.score.trim() || null,
+      status: 'Upcoming',
+      score: null,
       sort_order: games.length,
     })
     if (error) {
@@ -136,7 +129,6 @@ function AdminGames() {
                   <th>Home/Away</th>
                   <th>Time</th>
                   <th>Location</th>
-                  <th>Result</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -164,27 +156,6 @@ function AdminGames() {
                     </td>
                     <td>
                       <EditableField value={game.location} onSave={(v) => handleFieldSave(game, { location: v })} />
-                    </td>
-                    <td>
-                      <span className={statusClass(game.status)}>
-                        <select
-                          className="admin-inline-select"
-                          value={game.status}
-                          onChange={(e) => handleFieldSave(game, { status: e.target.value as Game['status'] })}
-                        >
-                          <option value="Upcoming">Upcoming</option>
-                          <option value="Win">Win</option>
-                          <option value="Loss">Loss</option>
-                        </select>
-                        {game.status !== 'Upcoming' && (
-                          <EditableField
-                            className="admin-inline-score"
-                            value={game.score ?? ''}
-                            placeholder="score"
-                            onSave={(v) => handleFieldSave(game, { score: v || null })}
-                          />
-                        )}
-                      </span>
                     </td>
                     <td className="admin-table__actions">
                       <button type="button" className="admin-btn admin-btn--danger" onClick={() => handleDelete(game)}>
@@ -227,21 +198,6 @@ function AdminGames() {
                       placeholder={newRow.is_home ? undefined : 'e.g. Auburn, AL'}
                       onChange={(e) => setNewRow({ ...newRow, location: e.target.value })}
                     />
-                  </td>
-                  <td>
-                    <select value={newRow.status} onChange={(e) => setNewRow({ ...newRow, status: e.target.value as Game['status'] })}>
-                      <option value="Upcoming">Upcoming</option>
-                      <option value="Win">Win</option>
-                      <option value="Loss">Loss</option>
-                    </select>
-                    {newRow.status !== 'Upcoming' && (
-                      <input
-                        value={newRow.score}
-                        placeholder="27-12"
-                        onChange={(e) => setNewRow({ ...newRow, score: e.target.value })}
-                        style={{ marginTop: '0.35rem' }}
-                      />
-                    )}
                   </td>
                   <td>
                     <button type="button" className="admin-btn" onClick={handleAdd}>

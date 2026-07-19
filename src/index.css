@@ -85,6 +85,7 @@ h4 {
   color: var(--color-heading);
   margin: 0 0 0.5em;
   line-height: 1.15;
+  text-align: center;
 }
 
 h1 {
@@ -130,13 +131,15 @@ button {
 
 .schedule-section-heading {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: center;
   gap: 0.75rem;
-  margin-top: var(--space-section);
+  margin-top: 50px;
 }
 
 .schedule-section-heading h2 {
   margin-top: 0;
+  text-align: center;
 }
 
 .schedule-semester {
@@ -145,4 +148,59 @@ button {
   font-size: 0.85rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* Frosted navy practice table, shared by the Home and Schedule pages. */
+.practice-table {
+  width: 100%;
+  margin-top: 1.75rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: rgba(5, 30, 57, 0.75);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+}
+
+.practice-table th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--gt-gold);
+  padding: 1.1rem 1.75rem;
+  border-bottom: 1px solid rgba(179, 144, 81, 0.35);
+}
+
+.practice-table td {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  letter-spacing: 0.03em;
+  text-align: center;
+  color: var(--gt-diploma);
+  padding: 1.05rem 1.75rem;
+  border-bottom: 1px solid rgba(249, 246, 229, 0.08);
+}
+
+.practice-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.practice-table__day {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 640px) {
+  .practice-table th,
+  .practice-table td {
+    padding: 0.8rem 1rem;
+  }
 }

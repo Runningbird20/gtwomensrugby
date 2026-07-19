@@ -18,6 +18,9 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
   const [newName, setNewName] = useState('')
   const [newRole, setNewRole] = useState(roleOptions[0])
   const [newPhoto, setNewPhoto] = useState<File | null>(null)
+  const [newPosition, setNewPosition] = useState('')
+  const [newSchoolYear, setNewSchoolYear] = useState('')
+  const [newMajor, setNewMajor] = useState('')
 
   const load = async () => {
     setLoading(true)
@@ -54,6 +57,9 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
       role: newRole,
       photo_url,
       sort_order: people.length,
+      position: newPosition.trim() || null,
+      school_year: newSchoolYear.trim() || null,
+      major: newMajor.trim() || null,
     })
     if (error) {
       setStatus(`Error adding: ${error.message}`)
@@ -62,6 +68,9 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
     setNewName('')
     setNewRole(roleOptions[0])
     setNewPhoto(null)
+    setNewPosition('')
+    setNewSchoolYear('')
+    setNewMajor('')
     setStatus('Added.')
     load()
   }
@@ -92,6 +101,41 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
     load()
   }
 
+  const [dragId, setDragId] = useState<string | null>(null)
+
+  const handleDragOver = (e: React.DragEvent, overId: string) => {
+    e.preventDefault()
+    if (!dragId || dragId === overId) return
+    setPeople((prev) => {
+      const from = prev.findIndex((p) => p.id === dragId)
+      const to = prev.findIndex((p) => p.id === overId)
+      if (from < 0 || to < 0) return prev
+      const next = [...prev]
+      const [moved] = next.splice(from, 1)
+      next.splice(to, 0, moved)
+      return next
+    })
+  }
+
+  const handleDragEnd = async () => {
+    setDragId(null)
+    const results = await Promise.all(
+      people.map((person, index) =>
+        person.sort_order === index
+          ? Promise.resolve({ error: null })
+          : supabase.from('people').update({ sort_order: index }).eq('id', person.id),
+      ),
+    )
+    const failed = results.find((result) => result.error)
+    if (failed?.error) {
+      setStatus(`Error saving order: ${failed.error.message}`)
+      load()
+      return
+    }
+    setPeople((prev) => prev.map((person, index) => ({ ...person, sort_order: index })))
+    setStatus('Order saved.')
+  }
+
   return (
     <section className="admin-section">
       <h1>{title}</h1>
@@ -111,6 +155,14 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
               onSave={(patch) => handleUpdate(person, patch)}
               onDelete={() => handleDelete(person)}
               onPhotoChange={(file) => handlePhotoChange(person, file)}
+              isDragging={dragId === person.id}
+              onDragStart={(e) => {
+                e.dataTransfer.setData('text/plain', person.id)
+                e.dataTransfer.effectAllowed = 'move'
+                setDragId(person.id)
+              }}
+              onDragOver={(e) => handleDragOver(e, person.id)}
+              onDragEnd={handleDragEnd}
             />
           ))}
         </div>
@@ -137,6 +189,18 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
             Photo (optional)
             <input type="file" accept="image/*" onChange={(e) => setNewPhoto(e.target.files?.[0] ?? null)} />
           </label>
+          <label>
+            Position
+            <input value={newPosition} onChange={(e) => setNewPosition(e.target.value)} placeholder="e.g. Flanker" />
+          </label>
+          <label>
+            Year in school
+            <input value={newSchoolYear} onChange={(e) => setNewSchoolYear(e.target.value)} placeholder="e.g. 3rd year" />
+          </label>
+          <label>
+            Major
+            <input value={newMajor} onChange={(e) => setNewMajor(e.target.value)} placeholder="e.g. Computer Science" />
+          </label>
         </div>
         <button type="button" className="admin-btn" onClick={handleAdd} style={{ marginTop: '0.75rem' }}>
           Add
@@ -154,18 +218,53 @@ function PersonCard({
   onSave,
   onDelete,
   onPhotoChange,
+  isDragging,
+  onDragStart,
+  onDragOver,
+  onDragEnd,
 }: {
   person: Person
   roleOptions: string[]
   onSave: (patch: Partial<Person>) => void
   onDelete: () => void
   onPhotoChange: (file: File) => void
+  isDragging: boolean
+  onDragStart: (e: React.DragEvent) => void
+  onDragOver: (e: React.DragEvent) => void
+  onDragEnd: () => void
 }) {
   const [name, setName] = useState(person.name)
   const [role, setRole] = useState(person.role)
+  const [position, setPosition] = useState(person.position ?? '')
+  const [schoolYear, setSchoolYear] = useState(person.school_year ?? '')
+  const [major, setMajor] = useState(person.major ?? '')
+
+  const handleSave = () =>
+    onSave({
+      name,
+      role,
+      position: position.trim() || null,
+      school_year: schoolYear.trim() || null,
+      major: major.trim() || null,
+    })
 
   return (
-    <div className="admin-card">
+    <div
+      className={isDragging ? 'admin-card admin-card--dragging' : 'admin-card'}
+      onDragOver={onDragOver}
+      onDrop={(e) => e.preventDefault()}
+    >
+      <button
+        type="button"
+        className="admin-card__drag"
+        draggable
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        title="Drag to reorder"
+        aria-label={`Drag to reorder ${person.name}`}
+      >
+        ⠿
+      </button>
       <div>
         {person.photo_url ? (
           <img src={person.photo_url} alt="" className="admin-card__photo" />
@@ -197,9 +296,21 @@ function PersonCard({
             ))}
           </select>
         </label>
+        <label>
+          Position
+          <input value={position} onChange={(e) => setPosition(e.target.value)} placeholder="e.g. Flanker" />
+        </label>
+        <label>
+          Year in school
+          <input value={schoolYear} onChange={(e) => setSchoolYear(e.target.value)} placeholder="e.g. 3rd year" />
+        </label>
+        <label>
+          Major
+          <input value={major} onChange={(e) => setMajor(e.target.value)} placeholder="e.g. Computer Science" />
+        </label>
       </div>
       <div className="admin-card__actions">
-        <button type="button" className="admin-btn" onClick={() => onSave({ name, role })}>
+        <button type="button" className="admin-btn" onClick={handleSave}>
           Save
         </button>
         <button type="button" className="admin-btn admin-btn--danger" onClick={onDelete}>

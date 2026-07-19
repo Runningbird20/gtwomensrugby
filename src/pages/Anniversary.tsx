@@ -42,7 +42,9 @@ function Anniversary() {
 
   return (
     <section className="page">
-      <h1>20th Anniversary</h1>
+      <h1 className="anniversary-heading">
+        <img src="/20-navy.png" alt="20th Anniversary" />
+      </h1>
       <p>{content['anniversary.intro']}</p>
 
       <div className="anniversary-schedule">

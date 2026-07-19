@@ -49,9 +49,9 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<AdminPeople section="coach" title="Coaches" />} />
-        <Route path="coaches" element={<AdminPeople section="coach" title="Coaches" />} />
-        <Route path="exec-board" element={<AdminPeople section="exec_board" title="Executive Board" />} />
+        <Route index element={<AdminPeople key="coach" section="coach" title="Coaches" />} />
+        <Route path="coaches" element={<AdminPeople key="coach" section="coach" title="Coaches" />} />
+        <Route path="exec-board" element={<AdminPeople key="exec_board" section="exec_board" title="Executive Board" />} />
         <Route path="alumni" element={<AdminAlumni />} />
         <Route path="practices" element={<AdminPractices />} />
         <Route path="games" element={<AdminGames />} />

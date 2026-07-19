@@ -53,8 +53,8 @@ function Home() {
         <div className="home-practice">
           <div className="schedule-section-heading">
             <h2>{content['schedule.practice_heading']}</h2>
-            <span className="schedule-semester">{content['schedule.practice_semester']}</span>
           </div>
+          <span className="schedule-semester">{content['schedule.practice_semester']}</span>
           <table className="practice-table">
             <thead>
               <tr>

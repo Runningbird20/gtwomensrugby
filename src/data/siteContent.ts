@@ -9,6 +9,7 @@ export const defaultSiteContent: Record<string, string> = {
   'schedule.practice_heading': 'Practice Schedule',
   'schedule.practice_semester': 'Spring 2011',
   'schedule.game_heading': 'Game Schedule',
+  'schedule.game_semester': 'Spring 2011',
   'anniversary.intro': "Celebrating 20 years of Georgia Tech Women's Rugby. Join us for a weekend of celebration, October 23–25.",
 }
 
@@ -23,5 +24,6 @@ export const siteContentLabels: Record<string, string> = {
   'schedule.practice_heading': 'Schedule — Practice section heading',
   'schedule.practice_semester': 'Schedule — Practice semester label',
   'schedule.game_heading': 'Schedule — Game section heading',
+  'schedule.game_semester': 'Schedule — Game semester label',
   'anniversary.intro': '20th Anniversary — Intro line',
 }

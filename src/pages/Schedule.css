@@ -1,39 +1,32 @@
 .page h2 {
-  margin-top: var(--space-section);
+ margin-top: 50px;
+ text-align: center;
+
 }
 
-.next-match {
-  margin-top: 2.5rem;
-  padding: 2.5rem 2rem;
-  border-radius: var(--radius-card);
-  background: var(--gt-navy);
-  color: var(--gt-white);
+/* Full-bleed action photo across the top of the page, like the About page. */
+.schedule-hero {
+  position: relative;
+  min-height: 50vh;
+  background: url('/schedule-bg.jpg') 65% 25% / cover no-repeat;
+}
+
+/* Navy wash so the white header nav stays readable over the photo. */
+.schedule-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(5, 30, 57, 0.331);
+}
+
+/* The hero already provides breathing room above the heading. */
+.page.schedule-page {
+  padding-top: 2.5rem;
+}
+
+.schedule-semester-row {
   text-align: center;
-  box-shadow: var(--shadow-card);
-}
-
-.next-match__label {
-  color: var(--gt-gold);
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin: 0 0 0.75rem;
-}
-
-.next-match__opponent {
-  color: var(--gt-white);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  margin: 0 0 0.75rem;
-}
-
-.next-match__details {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 1rem;
 }
 
 .schedule-table-wrapper {
@@ -66,9 +59,10 @@
   background: var(--color-nav-bg);
   font-family: var(--font-heading);
   font-weight: 500;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .schedule-table tbody tr:last-child td {
@@ -83,25 +77,23 @@
   background: var(--color-bg-alt);
 }
 
-.schedule-badge {
-  display: inline-block;
-  padding: 0.3rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
+/* Navy-themed game table: same frosted look as the practice table, with a
+   scroll wrapper for the five columns on small screens. */
+.schedule-table-wrapper--navy {
+  margin-top: 1.75rem;
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
 }
 
-.schedule-badge--win {
-  background: rgba(6, 96, 52, 0.12);
-  color: var(--gt-tech-lawn);
+.practice-table--games {
+  margin-top: 0;
+  min-width: 720px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-.schedule-badge--loss {
-  background: rgba(217, 3, 104, 0.12);
-  color: var(--gt-azalea);
-}
-
-.schedule-badge--upcoming {
-  background: rgba(179, 144, 81, 0.15);
-  color: var(--gt-dark-gold);
+.practice-table--games th,
+.practice-table--games td {
+  white-space: nowrap;
 }

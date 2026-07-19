@@ -13,11 +13,11 @@
   z-index: 2;
   background-image: url('/hero-bg.jpg');
   background-size: 140%;
-  background-position: 65% 55%;
+  background-position: 65% 50%;
   min-height: 60vh;
   padding: clamp(6rem, 14vw, 10rem) 1.5rem clamp(3rem, 6vw, 5rem);
   margin-bottom: 30px;
-  overflow: visable;
+  overflow: visible;
 }
 
 /* Navy wash over the photo: dark enough for text at load, and deepens to
@@ -26,7 +26,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(5, 30, 57, 0.65);
+  background: rgba(5, 30, 57, 0.808);
   opacity: calc(0.6 + 0.4 * var(--hero-scroll));
   pointer-events: none;
 }
@@ -109,66 +109,7 @@
 .home-practice {
   max-width: 1080px;
   margin: 0 auto;
-  text-align: left;
-}
-
-.practice-table {
-  width: 100%;
-  margin-top: 1.75rem;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  background: linear-gradient(150deg, #0b2c50, var(--gt-navy));
-  border: 1px solid rgba(179, 144, 81, 0.25);
-  box-shadow: var(--shadow-card);
-}
-
-.practice-table th {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-align: left;
-  color: var(--gt-gold);
-  padding: 1.1rem 1.75rem;
-  border-bottom: 1px solid rgba(179, 144, 81, 0.35);
-}
-
-.practice-table td {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
-  letter-spacing: 0.03em;
-  color: var(--gt-diploma);
-  padding: 1.05rem 1.75rem;
-  border-bottom: 1px solid rgba(249, 246, 229, 0.08);
-}
-
-.practice-table tbody tr {
-  transition: background-color var(--motion-fast);
-}
-
-.practice-table tbody tr:hover {
-  background: rgba(179, 144, 81, 0.1);
-}
-
-.practice-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.practice-table__day {
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-@media (max-width: 640px) {
-  .practice-table th,
-  .practice-table td {
-    padding: 0.8rem 1rem;
-  }
+  text-align: center;
 }
 
 .home-motivation {
@@ -181,4 +122,6 @@
   color: var(--color-heading);
   text-align: center;
   margin-bottom: 50px;
+  margin-top: 50px;
+  padding: 0rem ;
 }

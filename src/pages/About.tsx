@@ -1,13 +1,22 @@
+import { useState } from 'react'
 import './About.css'
+import Marquee from '../components/Marquee'
 import { usePeople } from '../hooks/usePeople'
 import { useSiteContent } from '../hooks/useSiteContent'
 import type { Person } from '../data/people'
 
-function PersonGrid({ people }: { people: Person[] }) {
+function PersonFlipCard({ person }: { person: Person }) {
+  const [isFlipped, setIsFlipped] = useState(false)
+
   return (
-    <div className="people-grid">
-      {people.map((person) => (
-        <div className="people-card" key={person.id}>
+    <button
+      type="button"
+      className="people-flip"
+      aria-pressed={isFlipped}
+      onClick={() => setIsFlipped((flipped) => !flipped)}
+    >
+      <div className={isFlipped ? 'people-flip__inner people-flip__inner--flipped' : 'people-flip__inner'}>
+        <div className="people-card people-card--front">
           {person.photo_url ? (
             <img src={person.photo_url} alt="" className="people-card__photo" />
           ) : (
@@ -16,6 +25,37 @@ function PersonGrid({ people }: { people: Person[] }) {
           <h3 className="people-card__name">{person.name}</h3>
           <p className="people-card__role">{person.role}</p>
         </div>
+        <div className="people-card people-card--back">
+          <h3 className="people-card-flipped__name">{person.name}</h3>
+            {person.school_year && (
+                <span className="people-card__meta">
+                  <span className="people-card__fact-label">Year</span>
+                  {person.school_year}
+                </span>
+              )}
+              {person.major && (
+                <span className="people-card__meta">
+                    <span className="people-card__fact-label">Major</span>
+                {person.major}
+              </span>
+          )}
+          {person.position && (
+            <span className="people-card__meta">
+              <span className="people-card__fact-label">Position</span>
+              {person.position}
+            </span>
+          )}
+        </div>
+      </div>
+    </button>
+  )
+}
+
+function PersonGrid({ people }: { people: Person[] }) {
+  return (
+    <div className="people-grid">
+      {people.map((person) => (
+        <PersonFlipCard person={person} key={person.id} />
       ))}
     </div>
   )
@@ -28,14 +68,12 @@ function About() {
   return (
     <>
       <section className="about-statement">
-        <p className="about-statement__line about-statement__line--outline">This Is</p>
-        <p className="about-statement__line">Georgia Tech</p>
-        <p className="about-statement__line about-statement__line--gold">Women's Rugby</p>
       </section>
-      <section className="page">
+      <Marquee text="This Is Georgia Tech Women's Rugby" />
+      <section className="page about-page">
         <h1>About Us</h1>
-        <p>{content['about.history_p1']}</p>
-        <p>{content['about.history_p2']}</p>
+        <p className="about-intro">{content['about.history_p1']}</p>
+        <p className="about-intro">{content['about.history_p2']}</p>
 
         <h2>Coaches</h2>
         <PersonGrid people={coaches} />

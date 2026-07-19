@@ -1,3 +1,5 @@
+/* No visible bar — the header is an invisible layout container and each
+   item inside it is its own floating frosted button. */
 .site-header {
   position: fixed;
   top: 0.75rem;
@@ -6,28 +8,27 @@
   z-index: 50;
   width: min(1120px, calc(100% - 2rem));
   margin: 0 auto;
-  border-radius: 999px;
-  border: 1px solid rgba(179, 144, 81, 0.35);
-  background: rgba(5, 30, 57, 0.75);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
   color: var(--color-nav-text);
-  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  transition: width 0.45s ease;
 }
 
-/* On small screens the nav wraps into a tall block: the full pill radius
-   turns into an egg shape, and a fixed overlay that tall would hide the
-   page — fall back to a sticky rounded rectangle that keeps its space. */
+/* Scrolled past the opening photo: the header spans the full window so the
+   nav group glides to the far right, where a frosted pill fades in around it. */
+.site-header--scrolled {
+  width: calc(100% - 2rem);
+}
+
+/* On small screens the wrapped nav is tall; keep it in the page flow so a
+   fixed overlay doesn't hide the content. */
 @media (max-width: 900px) {
   .site-header {
     position: sticky;
     margin: 0.75rem auto 0;
-    border-radius: 24px;
   }
 }
 
 .site-header__inner {
-  padding: 0.6rem 1rem 0.6rem 1.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,23 +36,78 @@
   gap: 1rem;
 }
 
+.site-header__inner > * {
+  pointer-events: auto;
+}
+
+/* The brand is a grid with the wordmark and the logo stacked in the same
+   cell; scrolling cross-fades one into the other. */
 .site-header__brand {
+  display: inline-grid;
+  align-items: center;
+  justify-items: start;
+  min-height: 44px;
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 1.25rem;
   color: var(--gt-gold);
   white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(5, 30, 57, 0.9), 0 0 12px rgba(5, 30, 57, 0.45);
+}
+
+.site-header__brand > * {
+  grid-area: 1 / 1;
 }
 
 .site-header__brand:hover {
   text-decoration: none;
 }
 
+.site-header__brand-text {
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.site-header__brand-logo {
+  height: 52px;
+  width: auto;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  filter: drop-shadow(0 2px 6px rgba(5, 30, 57, 0.35));
+}
+
+.site-header--scrolled .site-header__brand-text {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+.site-header--scrolled .site-header__brand-logo {
+  opacity: 1;
+  transform: scale(1);
+}
 .site-nav {
   display: flex;
   align-items: center;
   gap: 1.75rem;
   flex-wrap: wrap;
+  padding: 0.3rem 0;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: background-color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease, padding 0.45s ease;
+}
+
+.site-header--scrolled .site-nav {
+  background: rgba(5, 30, 57, 0.75);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-color: rgba(179, 144, 81, 0.35);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+  padding: 0.3rem 1.5rem;
+}
+
+.site-header--scrolled .site-nav__link,
+.site-header--scrolled .site-nav__cta {
+  text-shadow: none;
 }
 
 .site-nav__link {
@@ -64,6 +120,7 @@
   font-size: 0.9rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(5, 30, 57, 0.9), 0 0 12px rgba(5, 30, 57, 0.45);
   border-bottom: 2px solid transparent;
   transition: color var(--motion-fast), border-color var(--motion-fast);
 }
@@ -78,26 +135,61 @@
   border-bottom-color: var(--gt-gold);
 }
 
+/* On small screens the header sits on the cream page background, so the
+   light text flips to navy for contrast. */
+@media (max-width: 900px) {
+  .site-nav__link {
+    color: var(--gt-navy);
+    text-shadow: none;
+  }
+
+  .site-header__brand {
+    text-shadow: none;
+  }
+
+  /* Inside the scrolled navy pill the links flip back to light, and the
+     wrapped multi-row nav uses a gentler radius than a full pill. */
+  .site-header--scrolled .site-nav {
+    border-radius: 24px;
+  }
+
+  .site-header--scrolled .site-nav__link {
+    color: var(--color-nav-text);
+  }
+
+  .site-header--scrolled .site-nav__link--active,
+  .site-header--scrolled .site-nav__link:hover {
+    color: var(--gt-gold);
+  }
+
+  .site-header--scrolled .site-nav__cta {
+    color: var(--gt-gold);
+  }
+}
+
 .site-nav__cta {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding: 0 1.4rem;
-  border-radius: 999px;
-  background: var(--gt-gold);
-  color: var(--gt-navy);
+  color: var(--gt-gold);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  transition: background-color var(--motion-base), color var(--motion-base), transform var(--motion-fast);
+  text-shadow: 0 1px 2px rgba(5, 30, 57, 0.9), 0 0 12px rgba(5, 30, 57, 0.45);
+  transition: color var(--motion-base);
 }
 
 .site-nav__cta:hover {
-  background: var(--gt-dark-gold);
-  color: var(--gt-white);
+  color: var(--gt-buzz);
   text-decoration: none;
-  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .site-nav__cta {
+    color: var(--gt-dark-gold);
+    text-shadow: none;
+  }
 }
 
 .site-nav__dropdown {
