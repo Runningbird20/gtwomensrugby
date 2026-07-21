@@ -82,11 +82,11 @@
   transform-style: preserve-3d;
 }
 
-.people-flip:hover .people-flip__inner {
+/* Flip on hover (mouse) and focus-visible (keyboard); un-flips as soon as
+   the pointer leaves or focus moves on, no click needed. */
+.people-flip:hover .people-flip__inner,
+.people-flip:focus-visible .people-flip__inner {
   translate: 0 -4px;
-}
-
-.people-flip__inner--flipped {
   transform: rotateY(180deg);
 }
 
@@ -99,13 +99,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: rgba(5, 30, 57, 0.75);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  background: var(--gt-navy);
   border: 1px solid rgba(179, 144, 81, 0.35);
   border-radius: var(--radius-card);
   box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
-  padding: 1.75rem 1.5rem;
   text-align: center;
   transition: box-shadow var(--motion-base);
 }
@@ -116,6 +113,7 @@
 
 .people-card--back {
   transform: rotateY(180deg);
+  padding: 1.75rem 1.5rem;
 }
 
 .people-card__meta-row {
@@ -155,14 +153,31 @@
   font-style: italic;
 }
 
+/* Front face: photo fills the whole card, name/role overlaid at the bottom. */
+.people-card--front {
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
 .people-card__photo {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 1.1rem;
-  border-radius: 50%;
-  background: var(--color-bg-alt);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.people-card__photo--placeholder {
+  background: var(--color-bg-alt);
+}
+
+.people-card__overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 2.5rem 1.25rem 1.25rem;
+  background: linear-gradient(to top, rgba(5, 30, 57, 0.92) 0%, rgba(5, 30, 57, 0.55) 60%, rgba(5, 30, 57, 0) 100%);
 }
 
 .people-card__name {

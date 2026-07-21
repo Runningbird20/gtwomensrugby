@@ -97,9 +97,7 @@
 }
 
 .site-header--scrolled .site-nav {
-  background: rgba(5, 30, 57, 0.75);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  background: var(--gt-navy);
   border-color: rgba(179, 144, 81, 0.35);
   box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
   padding: 0.3rem 1.5rem;

@@ -9,7 +9,7 @@
 .marquee__track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 170s linear infinite;
+  animation: marquee-scroll var(--marquee-duration, 170s) linear infinite;
 }
 
 .marquee__group {
@@ -33,6 +33,20 @@
 
 .marquee__dot {
   color: rgba(5, 30, 57, 0.45);
+}
+
+/* Inverted variant: navy field, gold text. */
+.marquee--navy {
+  background: var(--gt-navy);
+  border-color: rgba(179, 144, 81, 0.35);
+}
+
+.marquee--navy .marquee__item {
+  color: var(--gt-gold);
+}
+
+.marquee--navy .marquee__dot {
+  color: rgba(249, 246, 229, 0.45);
 }
 
 @keyframes marquee-scroll {

@@ -1,25 +1,54 @@
+/* Full-bleed action photo across the top of the page, like the About page. */
+.alumni-hero {
+  position: relative;
+  min-height: 50vh;
+  background: url('/alumni-bg.jpg') center 22% / cover no-repeat;
+}
+
+/* Navy wash so the white header nav stays readable over the photo. */
+.alumni-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(5, 30, 57, 0.331);
+}
+
+/* Tighter gap between the marquee above and the Alumni heading. */
+.page.alumni-page {
+  padding-top: 2rem;
+}
+
 .alumni-hint {
   color: var(--color-text-muted);
   font-size: 0.9rem;
   font-style: italic;
 }
 
+/* Flex + centered rows (not CSS grid) so an incomplete row — like a lone
+   Founder card — centers itself instead of hugging the left edge. Matches
+   .people-grid on the About page. */
 .alumni-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.75rem;
-  margin-top: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.alumni-grid > * {
+  flex: 0 0 calc((100% - 3rem) / 3);
 }
 
 @media (max-width: 800px) {
-  .alumni-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .alumni-grid > * {
+    flex-basis: calc((100% - 1.5rem) / 2);
   }
 }
 
 @media (max-width: 520px) {
-  .alumni-grid {
-    grid-template-columns: 1fr;
+  .alumni-grid > * {
+    flex-basis: 100%;
   }
 }
 
@@ -33,7 +62,7 @@
   color: inherit;
   cursor: pointer;
   perspective: 1000px;
-  height: 300px;
+  height: 320px;
 }
 
 .alumni-card__inner {
@@ -45,11 +74,11 @@
   transform-style: preserve-3d;
 }
 
-.alumni-card:hover .alumni-card__inner {
-  translate: 0 -6px;
-}
-
-.alumni-card__inner--flipped {
+/* Flip on hover (mouse) and focus-visible (keyboard); un-flips as soon as
+   the pointer leaves or focus moves on, no click needed. Matches .people-flip. */
+.alumni-card:hover .alumni-card__inner,
+.alumni-card:focus-visible .alumni-card__inner {
+  translate: 0 -4px;
   transform: rotateY(180deg);
 }
 
@@ -57,44 +86,60 @@
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  background: var(--color-bg);
+  overflow: hidden;
+  background: var(--gt-navy);
+  border: 1px solid rgba(179, 144, 81, 0.35);
   border-radius: var(--radius-card);
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
   transition: box-shadow var(--motion-base);
 }
 
 .alumni-card:hover .alumni-card__face {
-  box-shadow: 0 20px 44px -14px var(--gt-gold);
+  box-shadow: 0 20px 44px -14px var(--hover-color);
+}
+
+/* Front face: photo fills the whole card, details overlaid at the bottom. */
+.alumni-card__face--front {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
 }
 
 .alumni-card__face--back {
   transform: rotateY(180deg);
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .alumni-card__photo {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 1.1rem;
-  border-radius: 50%;
-  background: var(--color-bg-alt);
-  border: 3px solid var(--color-bg-alt);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
-  transition: border-color var(--motion-base), box-shadow var(--motion-base);
 }
 
-.alumni-card:hover .alumni-card__photo {
-  border-color: var(--hover-color);
-  box-shadow: 0 0 18px 2px var(--hover-color);
+.alumni-card__photo--placeholder {
+  background: var(--color-bg-alt);
+}
+
+.alumni-card__overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+  padding: 2.5rem 1.25rem 1.25rem;
+  background: linear-gradient(to top, rgba(5, 30, 57, 0.92) 0%, rgba(5, 30, 57, 0.55) 60%, rgba(5, 30, 57, 0) 100%);
 }
 
 .alumni-card__years {
-  color: var(--gt-dark-gold);
+  color: var(--gt-gold);
   font-weight: 500;
   font-size: 0.85rem;
   letter-spacing: 0.03em;
@@ -102,29 +147,36 @@
   margin: 0 0 0.5rem;
 }
 
-.alumni-card__class {
-  font-weight: 500;
-  margin: 0 0 0.25rem;
+/* Back-face facts (Class, Position) — matches .people-card__meta. */
+.alumni-card__meta {
+  font-size: 0.9rem;
+  color: rgba(249, 246, 229, 0.85);
 }
 
-.alumni-card__position {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-  margin: 0;
+.alumni-card__fact-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gt-gold);
+  margin-bottom: 0.1rem;
+  margin-top: 1rem;
 }
 
 .alumni-card__name {
   margin-bottom: 0.5rem;
+  color: var(--gt-diploma);
 }
 
 .alumni-card__face--front .alumni-card__name {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   margin-bottom: 0.25rem;
 }
 
 .alumni-card__bio {
-  color: var(--color-text-muted);
+  color: rgba(249, 246, 229, 0.85);
   font-size: 0.92rem;
   max-width: none;
-  margin: 0;
+  margin: 1rem 0 0;
 }

@@ -7,13 +7,28 @@ function Schedule() {
   const content = useSiteContent()
   const practices = usePractices()
   const games = useGames()
+  const nextGame = games.find((game) => game.status === 'Upcoming')
 
   return (
     <>
-      <section className="schedule-hero" />
+      <section className="schedule-hero">
+        {nextGame && (
+          <div className="schedule-next-game">
+            <p className="schedule-next-game__label">Next Game</p>
+            <h2 className="schedule-next-game__opponent">
+              {nextGame.is_home ? 'vs.' : '@'} {nextGame.opponent}
+            </h2>
+            <div className="schedule-next-game__details">
+              <span>{nextGame.date}</span>
+              <span aria-hidden="true">·</span>
+              <span>{nextGame.time}</span>
+              <span aria-hidden="true">·</span>
+              <span>{nextGame.location}</span>
+            </div>
+          </div>
+        )}
+      </section>
       <section className="page schedule-page">
-        <h1>Schedule</h1>
-
         <div className="schedule-section-heading">
           <h2>{content['schedule.practice_heading']}</h2>
         </div>
@@ -58,7 +73,7 @@ function Schedule() {
             </thead>
             <tbody>
               {games.map((game) => (
-                <tr key={game.id}>
+                <tr className={game.is_home ? 'practice-table__home-row' : undefined} key={game.id}>
                   <td>{game.date}</td>
                   <td>{game.opponent}</td>
                   <td>{game.is_home ? 'Home' : 'Away'}</td>

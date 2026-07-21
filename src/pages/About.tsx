@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './About.css'
 import Marquee from '../components/Marquee'
 import { usePeople } from '../hooks/usePeople'
@@ -6,24 +5,19 @@ import { useSiteContent } from '../hooks/useSiteContent'
 import type { Person } from '../data/people'
 
 function PersonFlipCard({ person }: { person: Person }) {
-  const [isFlipped, setIsFlipped] = useState(false)
-
   return (
-    <button
-      type="button"
-      className="people-flip"
-      aria-pressed={isFlipped}
-      onClick={() => setIsFlipped((flipped) => !flipped)}
-    >
-      <div className={isFlipped ? 'people-flip__inner people-flip__inner--flipped' : 'people-flip__inner'}>
+    <button type="button" className="people-flip">
+      <div className="people-flip__inner">
         <div className="people-card people-card--front">
           {person.photo_url ? (
             <img src={person.photo_url} alt="" className="people-card__photo" />
           ) : (
-            <div className="people-card__photo" aria-hidden="true" />
+            <div className="people-card__photo people-card__photo--placeholder" aria-hidden="true" />
           )}
-          <h3 className="people-card__name">{person.name}</h3>
-          <p className="people-card__role">{person.role}</p>
+          <div className="people-card__overlay">
+            <h3 className="people-card__name">{person.name}</h3>
+            <p className="people-card__role">{person.role}</p>
+          </div>
         </div>
         <div className="people-card people-card--back">
           <h3 className="people-card-flipped__name">{person.name}</h3>

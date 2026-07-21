@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../utils/supabase'
 import { coachRoles, execBoardRoles, type Person } from '../../data/people'
+import PhotoCropper from './PhotoCropper'
 import './Admin.css'
 
-async function uploadPhoto(file: File): Promise<string | null> {
-  const path = `${crypto.randomUUID()}-${file.name}`
+// The person card's front face is a near-square photo (see .people-flip in
+// About.css: fixed 320px height, ~325px width at desktop's 3-up grid).
+const PERSON_PHOTO_ASPECT = 1
+const PERSON_PHOTO_CORNER_RADIUS = 0.055 // var(--radius-card) relative to that width
+
+async function uploadPhoto(file: File | Blob, filename = 'photo.jpg'): Promise<string | null> {
+  const name = file instanceof File ? file.name : filename
+  const path = `${crypto.randomUUID()}-${name}`
   const { error } = await supabase.storage.from('site-photos').upload(path, file)
   if (error) return null
   return supabase.storage.from('site-photos').getPublicUrl(path).data.publicUrl
@@ -17,7 +24,9 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
   const [status, setStatus] = useState<string | null>(null)
   const [newName, setNewName] = useState('')
   const [newRole, setNewRole] = useState(roleOptions[0])
-  const [newPhoto, setNewPhoto] = useState<File | null>(null)
+  const [newPhotoPending, setNewPhotoPending] = useState<File | null>(null)
+  const [newPhotoBlob, setNewPhotoBlob] = useState<Blob | null>(null)
+  const [editPhotoTarget, setEditPhotoTarget] = useState<{ person: Person; file: File } | null>(null)
   const [newPosition, setNewPosition] = useState('')
   const [newSchoolYear, setNewSchoolYear] = useState('')
   const [newMajor, setNewMajor] = useState('')
@@ -43,8 +52,8 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
     if (!newName.trim() || !newRole.trim()) return
 
     let photo_url: string | null = null
-    if (newPhoto) {
-      photo_url = await uploadPhoto(newPhoto)
+    if (newPhotoBlob) {
+      photo_url = await uploadPhoto(newPhotoBlob)
       if (!photo_url) {
         setStatus('Photo upload failed.')
         return
@@ -67,7 +76,8 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
     }
     setNewName('')
     setNewRole(roleOptions[0])
-    setNewPhoto(null)
+    setNewPhotoPending(null)
+    setNewPhotoBlob(null)
     setNewPosition('')
     setNewSchoolYear('')
     setNewMajor('')
@@ -91,8 +101,8 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
     load()
   }
 
-  const handlePhotoChange = async (person: Person, file: File) => {
-    const url = await uploadPhoto(file)
+  const handlePhotoChange = async (person: Person, blob: Blob) => {
+    const url = await uploadPhoto(blob)
     if (!url) {
       setStatus('Photo upload failed.')
       return
@@ -154,7 +164,7 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
               roleOptions={roleOptions}
               onSave={(patch) => handleUpdate(person, patch)}
               onDelete={() => handleDelete(person)}
-              onPhotoChange={(file) => handlePhotoChange(person, file)}
+              onPhotoSelect={(file) => setEditPhotoTarget({ person, file })}
               isDragging={dragId === person.id}
               onDragStart={(e) => {
                 e.dataTransfer.setData('text/plain', person.id)
@@ -187,8 +197,16 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
           </label>
           <label>
             Photo (optional)
-            <input type="file" accept="image/*" onChange={(e) => setNewPhoto(e.target.files?.[0] ?? null)} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files?.[0]) setNewPhotoPending(e.target.files[0])
+                e.target.value = ''
+              }}
+            />
           </label>
+          {newPhotoBlob && <p className="admin-section__hint">Photo positioned — will upload when you click Add.</p>}
           <label>
             Position
             <input value={newPosition} onChange={(e) => setNewPosition(e.target.value)} placeholder="e.g. Flanker" />
@@ -208,6 +226,32 @@ function AdminPeople({ section, title }: { section: 'coach' | 'exec_board'; titl
       </div>
 
       {status && <p className="admin-status">{status}</p>}
+
+      {newPhotoPending && (
+        <PhotoCropper
+          file={newPhotoPending}
+          aspect={PERSON_PHOTO_ASPECT}
+          cornerRadius={PERSON_PHOTO_CORNER_RADIUS}
+          onSave={(blob) => {
+            setNewPhotoBlob(blob)
+            setNewPhotoPending(null)
+          }}
+          onCancel={() => setNewPhotoPending(null)}
+        />
+      )}
+
+      {editPhotoTarget && (
+        <PhotoCropper
+          file={editPhotoTarget.file}
+          aspect={PERSON_PHOTO_ASPECT}
+          cornerRadius={PERSON_PHOTO_CORNER_RADIUS}
+          onSave={async (blob) => {
+            await handlePhotoChange(editPhotoTarget.person, blob)
+            setEditPhotoTarget(null)
+          }}
+          onCancel={() => setEditPhotoTarget(null)}
+        />
+      )}
     </section>
   )
 }
@@ -217,7 +261,7 @@ function PersonCard({
   roleOptions,
   onSave,
   onDelete,
-  onPhotoChange,
+  onPhotoSelect,
   isDragging,
   onDragStart,
   onDragOver,
@@ -227,7 +271,7 @@ function PersonCard({
   roleOptions: string[]
   onSave: (patch: Partial<Person>) => void
   onDelete: () => void
-  onPhotoChange: (file: File) => void
+  onPhotoSelect: (file: File) => void
   isDragging: boolean
   onDragStart: (e: React.DragEvent) => void
   onDragOver: (e: React.DragEvent) => void
@@ -275,7 +319,10 @@ function PersonCard({
           type="file"
           accept="image/*"
           style={{ marginTop: '0.5rem', fontSize: '0.7rem', width: '90px' }}
-          onChange={(e) => e.target.files && onPhotoChange(e.target.files[0])}
+          onChange={(e) => {
+            if (e.target.files?.[0]) onPhotoSelect(e.target.files[0])
+            e.target.value = ''
+          }}
         />
       </div>
       <div className="admin-card__fields">

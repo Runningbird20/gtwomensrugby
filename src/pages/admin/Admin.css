@@ -359,7 +359,7 @@
   position: absolute;
   top: 0.4rem;
   right: 0.4rem;
-  background: rgba(5, 30, 57, 0.8);
+  background: var(--gt-navy);
   color: #fff;
   border: none;
   border-radius: 4px;

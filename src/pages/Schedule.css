@@ -7,6 +7,10 @@
 /* Full-bleed action photo across the top of the page, like the About page. */
 .schedule-hero {
   position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   min-height: 50vh;
   background: url('/schedule-bg.jpg') 65% 25% / cover no-repeat;
 }
@@ -20,9 +24,61 @@
   background: rgba(5, 30, 57, 0.331);
 }
 
-/* The hero already provides breathing room above the heading. */
+/* Extra top clearance so the Practice heading clears the card straddling the seam above. */
 .page.schedule-page {
-  padding-top: 2.5rem;
+  padding-top: 5rem;
+}
+
+/* Sits flush with the bottom of the hero photo, then drops half its own
+   height below that edge — same overflow trick as .hero__slogan on the
+   home page, so it straddles the photo and the page content beneath it. */
+.schedule-next-game {
+  position: relative;
+  z-index: 1;
+  transform: translateY(50%);
+  width: min(560px, calc(100% - 3rem));
+  padding: 2rem 1.5rem;
+  border-radius: var(--radius-card);
+  background: var(--gt-navy);
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .page.schedule-page {
+    padding-top: 4.5rem;
+  }
+
+  .schedule-next-game {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+.schedule-next-game__label {
+  color: var(--gt-gold);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+/* Higher specificity than the global `.page h2` rule so the frosted card
+   controls its own heading spacing/color instead of inheriting it. */
+.schedule-next-game .schedule-next-game__opponent {
+  color: var(--gt-diploma);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin: 0 0 0.75rem;
+}
+
+.schedule-next-game__details {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  color: rgba(249, 246, 229, 0.75);
+  font-size: 1rem;
 }
 
 .schedule-semester-row {
