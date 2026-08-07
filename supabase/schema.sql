@@ -109,9 +109,14 @@ create policy "Admins can manage practices" on practices
   with check (auth.role() = 'authenticated');
 
 -- ---------- Game Schedule ----------
+-- game_date is the single source of truth for both ordering (soonest to
+-- latest) and display; the public site formats it without the year (see
+-- formatGameDate in src/data/games.ts) — the year is only ever shown in the
+-- admin date picker. See migration_game_date.sql if this table already
+-- exists with the older free-text `date` column.
 create table if not exists games (
   id uuid primary key default gen_random_uuid(),
-  date text not null,
+  game_date date,
   opponent text not null,
   is_home boolean not null default true,
   time text not null,

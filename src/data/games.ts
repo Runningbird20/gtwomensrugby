@@ -1,6 +1,6 @@
 export interface Game {
   id: string
-  date: string
+  game_date: string | null
   opponent: string
   is_home: boolean
   time: string
@@ -15,7 +15,7 @@ export const defaultHomeLocation = 'Stamps Field'
 export const defaultGames: Game[] = [
   {
     id: 'default-game-1',
-    date: 'Sat, Aug. 30',
+    game_date: '2026-08-30',
     opponent: 'University of Georgia',
     is_home: true,
     time: '1:00 PM',
@@ -26,7 +26,7 @@ export const defaultGames: Game[] = [
   },
   {
     id: 'default-game-2',
-    date: 'Sat, Sep. 13',
+    game_date: '2026-09-13',
     opponent: 'Auburn University',
     is_home: false,
     time: '12:00 PM',
@@ -37,7 +37,7 @@ export const defaultGames: Game[] = [
   },
   {
     id: 'default-game-3',
-    date: 'Sat, Sep. 27',
+    game_date: '2026-09-27',
     opponent: 'University of Alabama',
     is_home: true,
     time: '1:00 PM',
@@ -48,7 +48,7 @@ export const defaultGames: Game[] = [
   },
   {
     id: 'default-game-4',
-    date: 'Sat, Oct. 24',
+    game_date: '2026-10-24',
     opponent: 'Boston College',
     is_home: true,
     time: 'TBD',
@@ -59,7 +59,7 @@ export const defaultGames: Game[] = [
   },
   {
     id: 'default-game-5',
-    date: 'Sat, Nov. 8',
+    game_date: '2026-11-08',
     opponent: 'University of Tennessee',
     is_home: false,
     time: '11:00 AM',
@@ -70,7 +70,7 @@ export const defaultGames: Game[] = [
   },
   {
     id: 'default-game-6',
-    date: 'Sat, Nov. 22',
+    game_date: '2026-11-22',
     opponent: 'Clemson University',
     is_home: true,
     time: '1:00 PM',
@@ -80,3 +80,24 @@ export const defaultGames: Game[] = [
     sort_order: 5,
   },
 ]
+
+// Soonest to latest; games with no game_date set yet sort to the end
+// instead of before everything else.
+export function sortByGameDate(games: Game[]): Game[] {
+  return [...games].sort((a, b) => {
+    if (!a.game_date && !b.game_date) return 0
+    if (!a.game_date) return 1
+    if (!b.game_date) return -1
+    return a.game_date.localeCompare(b.game_date)
+  })
+}
+
+// Public-facing display, e.g. "Sat, Aug. 30" — deliberately omits the year.
+// The year is only ever shown in the admin date picker.
+export function formatGameDate(gameDate: string | null): string {
+  if (!gameDate) return 'Date TBD'
+  const date = new Date(`${gameDate}T00:00:00`)
+  const weekday = date.toLocaleDateString('en-US', { weekday: 'short' })
+  const month = date.toLocaleDateString('en-US', { month: 'short' })
+  return `${weekday}, ${month}. ${date.getDate()}`
+}

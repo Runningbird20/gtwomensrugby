@@ -7,9 +7,10 @@ interface EditableFieldProps {
   as?: ElementType
   className?: string
   placeholder?: string
+  type?: 'text' | 'date'
 }
 
-function EditableField({ value, onSave, as: Tag = 'span', className, placeholder }: EditableFieldProps) {
+function EditableField({ value, onSave, as: Tag = 'span', className, placeholder, type = 'text' }: EditableFieldProps) {
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(value)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -41,6 +42,7 @@ function EditableField({ value, onSave, as: Tag = 'span', className, placeholder
     return (
       <input
         ref={inputRef}
+        type={type}
         className={`editable-field editable-field--input ${className ?? ''}`}
         value={draft}
         placeholder={placeholder}

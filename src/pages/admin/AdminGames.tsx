@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../utils/supabase'
-import { defaultHomeLocation, type Game } from '../../data/games'
+import { defaultHomeLocation, formatGameDate, sortByGameDate, type Game } from '../../data/games'
 import { defaultSiteContent } from '../../data/siteContent'
 import EditableField from '../../components/EditableField'
 import '../Schedule.css'
 import './Admin.css'
 
 type NewGameDraft = {
-  date: string
+  game_date: string
   opponent: string
   is_home: boolean
   time: string
@@ -15,7 +15,7 @@ type NewGameDraft = {
 }
 
 const emptyDraft: NewGameDraft = {
-  date: '',
+  game_date: '',
   opponent: '',
   is_home: true,
   time: '',
@@ -41,11 +41,11 @@ function AdminGames() {
   const load = async () => {
     setLoading(true)
     const [gamesResult, contentResult] = await Promise.all([
-      supabase.from('games').select('*').order('sort_order', { ascending: true }),
+      supabase.from('games').select('*'),
       supabase.from('site_content').select('key, value').eq('key', 'schedule.game_heading'),
     ])
 
-    if (!gamesResult.error && gamesResult.data) setGames(gamesResult.data as Game[])
+    if (!gamesResult.error && gamesResult.data) setGames(sortByGameDate(gamesResult.data as Game[]))
     if (!contentResult.error && contentResult.data?.[0]) setHeading(contentResult.data[0].value)
     setLoading(false)
   }
@@ -63,7 +63,7 @@ function AdminGames() {
   }
 
   const handleAdd = async () => {
-    if (!newRow.date.trim() || !newRow.opponent.trim() || !newRow.location.trim()) return
+    if (!newRow.game_date || !newRow.opponent.trim() || !newRow.location.trim()) return
     // Result tracking was removed from the UI; new games still store a
     // status so the games table stays consistent.
     const { error } = await supabase.from('games').insert({
@@ -87,7 +87,7 @@ function AdminGames() {
       setStatus(`Error saving: ${error.message}`)
       return
     }
-    setGames((current) => current.map((g) => (g.id === game.id ? { ...g, ...patch } : g)))
+    setGames((current) => sortByGameDate(current.map((g) => (g.id === game.id ? { ...g, ...patch } : g))))
     setStatus('Saved.')
   }
 
@@ -110,8 +110,9 @@ function AdminGames() {
   return (
     <section className="admin-section">
       <p className="admin-section__hint">
-        This looks exactly like the live table on the Schedule page. Click any text to edit it — changes save as
-        soon as you click away or press Enter.
+        Click any text to edit it — changes save as soon as you click away or press Enter. Games are ordered
+        automatically by Date, soonest to latest. The site only ever shows the weekday and month to visitors — the
+        year (shown here for your own reference) never appears on the public Schedule page.
       </p>
 
       {loading ? (
@@ -136,7 +137,13 @@ function AdminGames() {
                 {games.map((game) => (
                   <tr key={game.id}>
                     <td>
-                      <EditableField value={game.date} onSave={(v) => handleFieldSave(game, { date: v })} />
+                      <EditableField
+                        type="date"
+                        value={game.game_date ?? ''}
+                        placeholder="Not set"
+                        onSave={(v) => handleFieldSave(game, { game_date: v || null })}
+                      />
+                      <p className="admin-table__hint">Shows as "{formatGameDate(game.game_date)}"</p>
                     </td>
                     <td>
                       <EditableField value={game.opponent} onSave={(v) => handleFieldSave(game, { opponent: v })} />
@@ -167,10 +174,13 @@ function AdminGames() {
                 <tr className="admin-table__new-row">
                   <td>
                     <input
-                      value={newRow.date}
-                      placeholder="Sat, Aug. 30"
-                      onChange={(e) => setNewRow({ ...newRow, date: e.target.value })}
+                      type="date"
+                      value={newRow.game_date}
+                      onChange={(e) => setNewRow({ ...newRow, game_date: e.target.value })}
                     />
+                    {newRow.game_date && (
+                      <p className="admin-table__hint">Shows as "{formatGameDate(newRow.game_date)}"</p>
+                    )}
                   </td>
                   <td>
                     <input

@@ -2,6 +2,7 @@ import './Schedule.css'
 import { usePractices } from '../hooks/usePractices'
 import { useGames } from '../hooks/useGames'
 import { useSiteContent } from '../hooks/useSiteContent'
+import { formatGameDate } from '../data/games'
 
 function Schedule() {
   const content = useSiteContent()
@@ -19,7 +20,7 @@ function Schedule() {
               {nextGame.is_home ? 'vs.' : '@'} {nextGame.opponent}
             </h2>
             <div className="schedule-next-game__details">
-              <span>{nextGame.date}</span>
+              <span>{formatGameDate(nextGame.game_date)}</span>
               <span aria-hidden="true">·</span>
               <span>{nextGame.time}</span>
               <span aria-hidden="true">·</span>
@@ -74,7 +75,7 @@ function Schedule() {
             <tbody>
               {games.map((game) => (
                 <tr className={game.is_home ? 'practice-table__home-row' : undefined} key={game.id}>
-                  <td>{game.date}</td>
+                  <td>{formatGameDate(game.game_date)}</td>
                   <td>{game.opponent}</td>
                   <td>{game.is_home ? 'Home' : 'Away'}</td>
                   <td>{game.time}</td>
