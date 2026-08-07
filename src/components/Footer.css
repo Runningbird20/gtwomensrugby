@@ -27,12 +27,9 @@
 }
 
 .site-footer__brand {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: var(--gt-gold);
-  margin: 0;
-  text-align: left;
+  height: 40px;
+  width: auto;
+  justify-self: start;
 }
 
 @media (max-width: 640px) {
@@ -43,8 +40,7 @@
     padding: 2rem 1.5rem;
   }
 
-  .site-footer__tagline,
-  .site-footer__brand {
+  .site-footer__tagline {
     text-align: center;
   }
 }

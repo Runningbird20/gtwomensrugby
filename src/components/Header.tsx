@@ -37,7 +37,10 @@ function Header() {
     <header className={scrolled ? 'site-header site-header--scrolled' : 'site-header'}>
       <div className="site-header__inner">
         <NavLink to="/" className="site-header__brand">
-          <span className="site-header__brand-text">GT Women's Rugby</span>
+          <span className="site-header__brand-primary">
+            <img className="site-header__brand-gt-mark" src="/gt-logo.png" alt="" />
+            <span className="site-header__brand-text">Women's Rugby Club</span>
+          </span>
           <img className="site-header__brand-logo" src="/logo-bee.png" alt="" />
         </NavLink>
 
