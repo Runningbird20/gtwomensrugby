@@ -24,3 +24,45 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.contact-instagram {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: fit-content;
+  margin: 2rem auto 0;
+  padding: 1.1rem 1.75rem;
+  border-radius: var(--radius-card);
+  background: var(--gt-navy);
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+  color: var(--gt-diploma);
+  text-decoration: none;
+  transition: transform var(--motion-base), box-shadow var(--motion-base);
+}
+
+.contact-instagram:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 44px -14px rgba(179, 144, 81, 0.45);
+  text-decoration: none;
+}
+
+.contact-instagram__icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: var(--gt-gold);
+}
+
+.contact-instagram__label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.contact-instagram__handle {
+  display: block;
+  color: var(--gt-gold);
+  font-size: 0.85rem;
+  margin-top: 0.15rem;
+}
