@@ -1,8 +1,62 @@
+/* Full-bleed action photo across the top of the page, like the About page. */
+.anniversary-hero {
+  position: relative;
+  min-height: 50vh;
+  background: url('/alumni-bg.jpg') center 22% / cover no-repeat;
+}
+
+/* Navy wash so the white header nav stays readable over the photo. */
+.anniversary-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(5, 30, 57, 0.331);
+}
+
+/* Tighter gap between the marquee above and the anniversary badge. */
+.page.anniversary-page {
+  padding-top: 2rem;
+}
+
 .anniversary-heading img {
   display: block;
   margin: 0 auto;
   width: min(340px, 75vw);
   height: auto;
+}
+
+.anniversary-intro {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.anniversary-merch {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.anniversary-merch__button {
+  min-width: 260px;
+}
+
+.anniversary-merch__button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.anniversary-merch__button:disabled:hover {
+  transform: none;
+  background: var(--gt-gold);
+  color: var(--gt-navy);
+  box-shadow: none;
+}
+
+.anniversary-merch__note {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  margin: 0.5rem 0 0;
 }
 
 .anniversary-schedule {
@@ -12,11 +66,13 @@
   margin-top: 2.5rem;
 }
 
+/* Solid navy cards, matching the practice/game tables and the Next Game
+   callout elsewhere on the site instead of the old plain white card. */
 .anniversary-schedule__item {
-  background: var(--color-bg);
-  border-top: 4px solid var(--gt-gold);
+  background: var(--gt-navy);
+  border: 1px solid rgba(179, 144, 81, 0.35);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
   padding: 2rem;
   display: flex;
   flex-wrap: wrap;
@@ -28,7 +84,7 @@
 
 .anniversary-schedule__item:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: 0 20px 44px -14px rgba(179, 144, 81, 0.45);
 }
 
 .anniversary-schedule__main {
@@ -36,15 +92,16 @@
 }
 
 .anniversary-schedule__date {
-  color: var(--gt-dark-gold);
-  font-weight: 500;
+  color: var(--gt-gold);
+  font-weight: 600;
   font-size: 0.85rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 0 0 0.5rem;
 }
 
 .anniversary-schedule__title {
+  color: var(--gt-diploma);
   margin-bottom: 0.75rem;
 }
 
@@ -52,7 +109,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  color: var(--color-text-muted);
+  color: rgba(249, 246, 229, 0.75);
   font-size: 0.9rem;
 }
 
@@ -61,11 +118,11 @@
 }
 
 .anniversary-schedule__summary {
-  color: var(--color-text-muted);
+  color: rgba(249, 246, 229, 0.75);
   font-size: 0.9rem;
   margin: 0.75rem 0 0;
   padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(249, 246, 229, 0.15);
 }
 
 .anniversary-schedule__payment {
@@ -73,12 +130,12 @@
   text-align: center;
   padding: 1.25rem;
   border-radius: var(--radius-btn);
-  background: var(--color-bg-alt);
+  background: rgba(249, 246, 229, 0.06);
 }
 
 .anniversary-schedule__payment-label {
-  color: var(--gt-dark-gold);
-  font-weight: 500;
+  color: var(--gt-gold);
+  font-weight: 600;
   font-size: 0.8rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -87,21 +144,22 @@
 
 .anniversary-schedule__payment-button {
   width: 100%;
-  min-height: 44px;
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: var(--radius-btn);
-  background: var(--gt-navy);
-  color: var(--color-nav-text);
-  font-weight: 500;
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
-  opacity: 0.6;
+}
+
+.anniversary-schedule__payment-button:disabled {
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
+.anniversary-schedule__payment-button:disabled:hover {
+  transform: none;
+  background: var(--gt-gold);
+  color: var(--gt-navy);
+  box-shadow: none;
+}
+
 .anniversary-schedule__payment-note {
-  color: var(--color-text-muted);
+  color: rgba(249, 246, 229, 0.6);
   font-size: 0.75rem;
   margin: 0.5rem 0 0;
 }
