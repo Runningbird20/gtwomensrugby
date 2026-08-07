@@ -1,93 +1,383 @@
-# Georgia Tech Women's Rugby — Website Design Guide
+# Georgia Tech Women's Rugby Website Design Guide
 
-This guide adapts Georgia Tech's institutional brand standards (brand.gatech.edu) for use on the GT Women's Rugby club site. As a club sport, this site uses **Georgia Tech's general Institute branding**, not GT Athletics branding — the interlocking outlined "GT" mark and Athletics-specific logos/wordmarks are reserved exclusively for NCAA Athletics and may not be used here.
+This guide adapts Georgia Tech's institutional brand standards (brand.gatech.edu) for the GT Women's Rugby club website.
 
-## 1. Logo & Identity Rules
+As a club sport, this site follows **Georgia Tech Institute branding**, not Georgia Tech Athletics branding. The website should feel modern, premium, and easy to use, with information taking priority over decoration.
 
-- Do **not** create a custom logo to represent the team. Per Institute policy, student organizations may not design their own marks to represent themselves or Georgia Tech.
-- If a Georgia Tech logo is used on the site (e.g., in a footer or "About" section), use only the **official primary Institute logo** — not the Athletics interlocking GT.
-- Maintain clear space around any GT logo equal to the width/height of the word "Tech" within the mark.
-- Minimum logo height: 0.25 in (primary), 1.5 in width (combination logo). If space doesn't allow a combination lockup, use the primary logo and identify "Women's Rugby" in text instead.
-- Approved logo/background color pairings:
-  - Tech Gold + Navy on White
-  - Tech Gold + White on Navy
-  - Tech Gold on White
-  - White on Navy
-  - White on Tech Gold
-  - Navy on White (web/communications only)
-- Never skew, recolor, outline, or add effects/patterns to the logo.
+**Design philosophy**
 
-## 2. Color Palette
+> Apple's simplicity + Nike's photography + Formula 1's information hierarchy.
 
-### Core Colors
-| Name | Hex | RGB | Use |
-|---|---|---|---|
-| Tech Gold | `#B39051` | 179, 144, 81 | Primary brand color — accents, buttons, highlights |
-| Navy | `#051E39` | 5, 30, 57 | Primary dark color — headers, nav, text on light bg |
-| Dark Gold | `#8F713D` | 143, 113, 61 | Hover states, borders, secondary emphasis |
-| White | `#FFFFFF` | 255, 255, 255 | Backgrounds, text on Navy |
-
-### Secondary Colors
-| Name | Hex | RGB | Use |
-|---|---|---|---|
-| Diploma | `#F9F6E5` | 249, 246, 229 | Warm off-white background alternative |
-| Buzz | `#EAAA00` | 234, 170, 0 | Bright gold accent — sparingly, for CTAs/badges |
-
-### Accent Colors (use sparingly, for tags/highlights/graphics — e.g. schedule status, roster positions)
-| Name | Hex | RGB |
-|---|---|---|
-| Campanile (teal) | `#048A81` | 4, 138, 129 |
-| Tech Lawn (green) | `#066034` | 6, 96, 52 |
-| Burdell (light blue) | `#BBE6F2` | 187, 230, 242 |
-| Azalea (pink) | `#D90368` | 217, 3, 104 |
-| Whistle (purple) | `#660064` | 102, 0, 100 |
-
-**Guidance:** Gold and Navy should carry the site's primary visual weight (roughly 80% of color usage). Accent colors are for functional differentiation only (e.g., match result badges: win/loss/upcoming) — not decoration.
-
-## 3. Typography
-
-Georgia Tech's digital/web standard uses **Roboto** as the workhorse typeface, avoiding the licensed print fonts (DIN, Adelle) that require paid subscriptions.
-
-| Role | Font | Fallback |
-|---|---|---|
-| Headings / Nav | **Roboto Slab** (bold/700) | Georgia, serif |
-| Body text | **Roboto** (400/regular) | Arial, sans-serif |
-| Subheads / pull quotes | **Roboto Slab** (medium/500) | Georgia, serif |
-| UI labels / buttons | **Roboto** (500/medium, uppercase, letter-spaced) | Arial, sans-serif |
-
-Both are free via Google Fonts:
-```html
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Slab:wght@500;700&display=swap" rel="stylesheet">
-```
-
-**Type scale suggestion:**
-- H1: 2.5rem / Roboto Slab 700 / Navy
-- H2: 1.75rem / Roboto Slab 700 / Navy
-- H3: 1.25rem / Roboto Slab 500 / Dark Gold
-- Body: 1rem / Roboto 400 / #1A1A1A (near-black, not pure black on white)
-- Small/meta (dates, captions): 0.85rem / Roboto 400 / #555
-
-## 4. Layout & Visual Principles
-
-- **Clarity and recognition** over decoration — GT's stated brand principle. Favor generous white space over dense pages.
-- Navy as the dominant "anchor" color (header, footer, nav bar); Gold as the accent that draws the eye (buttons, links, active states); White/Diploma as the primary background.
-- Avoid pure black (`#000000`) — use Navy or a near-black (`#1A1A1A`) for text instead, consistent with GT's warmer institutional palette.
-- Photography should feel authentic to club/student life — action shots from matches and practices — rather than polished Athletics-style studio photography.
-
-## 5. Component Guidance
-
-- **Buttons:** Navy background / White text (primary); Gold background / Navy text (secondary); on hover, shift to Dark Gold.
-- **Links:** Dark Gold or Navy, underlined on hover.
-- **Cards (roster, schedule, news):** White or Diploma background, subtle Navy border or shadow, Gold accent line/tag for status.
-- **Nav bar:** Navy background, White/Gold text, Gold underline for active page.
-- **Footer:** Navy background, White text, small Institute logo (primary lockup only) with "Club Sport" or "Not affiliated with GT Athletics" disclaimer if appropriate.
-
-## 6. What to Avoid
-
-- The outlined interlocking "GT" mark (Athletics-exclusive).
-- Any Athletics wordmarks, mascot imagery (Buzz character in Athletics contexts), or official team uniforms/branding — this is a club, not an NCAA program.
-- Creating a new/custom club logo without going through Institute trademark licensing.
-- Using pure black or off-brand colors (e.g., generic Bootstrap blue) as primary UI colors.
+The site should communicate everything a visitor needs within a few seconds while still feeling energetic and memorable.
 
 ---
-*Sourced from Georgia Tech Institute Communications brand guidelines (brand.gatech.edu), general Institute standards — not GT Athletics guidelines.*
+
+# Core Design Principles
+
+## Information First
+
+Every page should answer the visitor's primary question immediately.
+
+For example:
+
+- Home → Who are we? What's next? How do I join?
+- Schedule → When do we play?
+- Roster → Who's on the team?
+- Join → How do I become a member?
+
+Avoid decorative sections that don't help users accomplish a goal.
+
+---
+
+## One Primary Action Per Section
+
+Each section should have a single clear call-to-action.
+
+Examples:
+
+Upcoming Match
+→ View Schedule
+
+Roster Preview
+→ Meet the Team
+
+Join Women's Rugby
+→ Register
+
+Sponsors
+→ Become a Sponsor
+
+Avoid presenting multiple competing buttons in the same section.
+
+---
+
+## Spacious Layouts
+
+Favor generous whitespace over dense pages.
+
+The site should feel clean and breathable.
+
+- Large section spacing (80-120px)
+- Comfortable card padding
+- Limited text
+- Large imagery
+- Clear visual hierarchy
+
+Avoid cramming multiple unrelated components into a single screen.
+
+---
+
+## Typography Drives the Design
+
+Instead of relying on decorative graphics, use large typography to establish hierarchy.
+
+Recommended sizes:
+
+- Hero title: 4-5rem
+- Section headings: 2-2.5rem
+- Card titles: 1.25-1.5rem
+- Body text: 1rem
+
+Visitors should be able to scan the page in seconds.
+
+---
+
+# Homepage Layout
+
+Recommended homepage structure:
+
+1. Hero
+2. Upcoming Match
+3. Latest Result
+4. Quick Actions
+5. Featured News
+6. Roster Preview
+7. Season Schedule
+8. Instagram Gallery
+9. Sponsors
+10. Footer
+
+The homepage should avoid long introductions or large blocks of text.
+
+---
+
+# Logo & Identity Rules
+
+- Do **not** create a custom logo to represent the team.
+- Student organizations may not design their own institutional marks.
+- If a Georgia Tech logo is used, use only the official Institute logo.
+- Never use the Athletics interlocking "GT".
+- Maintain required clear space.
+- Never stretch, recolor, outline, rotate, or modify official marks.
+
+---
+
+# Color Palette
+
+## Core Colors
+
+| Name | Hex | Use |
+|------|------|------|
+| Tech Gold | `#B39051` | Primary accents, highlights, CTAs |
+| Navy | `#051E39` | Navigation, headers, dark backgrounds |
+| Dark Gold | `#8F713D` | Hover states, borders |
+| White | `#FFFFFF` | Primary background |
+
+## Supporting Colors
+
+| Name | Hex |
+|------|------|
+| Diploma | `#F9F6E5` |
+| Buzz | `#EAAA00` |
+
+## Accent Colors
+
+Use only for functional indicators such as:
+
+- Match status
+- Tags
+- Position labels
+- Alerts
+
+Never as primary page colors.
+
+### Color Distribution
+
+Aim for approximately:
+
+- 70% White / Diploma
+- 20% Navy
+- 10% Gold
+
+Accent colors should account for less than 5% of the interface.
+
+---
+
+# Typography
+
+Georgia Tech's digital standard uses Roboto.
+
+| Purpose | Font |
+|---------|------|
+| Headings | Roboto Slab 700 |
+| Body | Roboto 400 |
+| Buttons | Roboto 500 |
+| Navigation | Roboto Slab 700 |
+
+Typography should carry the visual weight of the design.
+
+---
+
+# Photography
+
+Photography is one of the most important visual elements.
+
+Prioritize:
+
+- Match action
+- Team celebrations
+- Practices
+- Sideline moments
+- Candid interactions
+
+Avoid:
+
+- Stock rugby imagery
+- Generic sports photos
+- Overly staged portraits
+
+Large photography should be paired with minimal text.
+
+---
+
+# Component Guidelines
+
+## Navigation
+
+Simple and predictable.
+
+Recommended pages:
+
+- Home
+- Schedule
+- Roster
+- News
+- Gallery
+- Join
+- Contact
+
+Avoid nested navigation whenever possible.
+
+---
+
+## Hero
+
+Large action photo.
+
+Minimal copy.
+
+Example:
+
+Play Hard.
+Hit Harder.
+
+Georgia Tech Women's Rugby
+
+Practice Tuesdays & Thursdays
+
+Primary CTA:
+Join the Team
+
+Secondary CTA:
+View Schedule
+
+---
+
+## Match Card
+
+The upcoming match should be the highest priority information.
+
+Include:
+
+- Opponent
+- Date
+- Time
+- Location
+- Countdown
+- Directions
+- Add to Calendar
+
+Scores should be large and immediately readable.
+
+---
+
+## News
+
+Display as large editorial cards.
+
+Each card should include:
+
+- Image
+- Headline
+- One sentence
+- Read More
+
+Avoid long previews.
+
+---
+
+## Cards
+
+Cards should use:
+
+- White or Diploma backgrounds
+- 16-20px border radius
+- Soft shadows
+- Plenty of internal spacing
+- Minimal borders
+
+Hover effects should be subtle.
+
+---
+
+## Buttons
+
+Primary
+
+- Navy
+- White text
+
+Secondary
+
+- Gold
+- Navy text
+
+Hover
+
+- Dark Gold
+
+Buttons should be large enough for touch devices.
+
+---
+
+# Motion
+
+Animation should support usability, not distract from it.
+
+Recommended:
+
+- Fade
+- Scale
+- Slide
+- Smooth scrolling
+- Hover elevation
+
+Avoid:
+
+- Bounce
+- Spin
+- Flashing effects
+- Excessive parallax
+
+Motion should be fast (150-300ms).
+
+---
+
+# Mobile First
+
+Most visitors will use phones.
+
+Design every page for mobile before desktop.
+
+Guidelines:
+
+- Large touch targets
+- Sticky navigation
+- Responsive cards
+- Single-column layouts
+- Readable typography
+- Limited scrolling within components
+
+---
+
+# Accessibility
+
+- Meet WCAG AA contrast standards.
+- Use semantic HTML.
+- Provide descriptive alt text.
+- Ensure full keyboard navigation.
+- Never rely on color alone to communicate meaning.
+- Maintain visible focus indicators.
+
+---
+
+# What to Avoid
+
+- Athletics branding
+- Interlocking GT logo
+- Creating a custom club logo
+- Generic Bootstrap styling
+- Dense pages
+- Small typography
+- Multiple competing CTAs
+- Walls of text
+- Heavy animations
+- Decorative gradients everywhere
+- Using every accent color simply because they're available
+
+---
+
+## Overall Experience
+
+The website should feel:
+
+- Modern
+- Confident
+- Fast
+- Spacious
+- Premium
+- Mobile-first
+- Easy to scan
+- Built around photography and typography
+
+Every page should allow a new visitor to find the information they need in under ten seconds.

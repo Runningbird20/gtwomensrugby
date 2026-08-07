@@ -1,0 +1,26 @@
+/* Full-bleed action photo across the top of the page, like the About page. */
+.contact-hero {
+  position: relative;
+  min-height: 50vh;
+  background: url('/contact-bg.jpg') center / cover no-repeat;
+}
+
+/* Navy wash so the white header nav stays readable over the photo. */
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(5, 30, 57, 0.331);
+}
+
+/* The hero already provides breathing room above the heading. */
+.page.contact-page {
+  padding-top: 2.5rem;
+}
+
+.contact-page p {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}

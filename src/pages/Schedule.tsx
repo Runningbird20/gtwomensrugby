@@ -1,82 +1,91 @@
 import './Schedule.css'
 import { usePractices } from '../hooks/usePractices'
 import { useGames } from '../hooks/useGames'
-import type { Game } from '../data/games'
 import { useSiteContent } from '../hooks/useSiteContent'
-
-function statusClass(status: Game['status']) {
-  if (status === 'Win') return 'schedule-badge schedule-badge--win'
-  if (status === 'Loss') return 'schedule-badge schedule-badge--loss'
-  return 'schedule-badge schedule-badge--upcoming'
-}
 
 function Schedule() {
   const content = useSiteContent()
   const practices = usePractices()
   const games = useGames()
+  const nextGame = games.find((game) => game.status === 'Upcoming')
 
   return (
-    <section className="page">
-      <h1>Schedule</h1>
-      <p>{content['schedule.intro']}</p>
-
-      <div className="schedule-section-heading">
-        <h2>{content['schedule.practice_heading']}</h2>
-        <span className="schedule-semester">{content['schedule.practice_semester']}</span>
-      </div>
-      <div className="schedule-table-wrapper">
-        <table className="schedule-table">
+    <>
+      <section className="schedule-hero">
+        {nextGame && (
+          <div className="schedule-next-game">
+            <p className="schedule-next-game__label">Next Game</p>
+            <h2 className="schedule-next-game__opponent">
+              {nextGame.is_home ? 'vs.' : '@'} {nextGame.opponent}
+            </h2>
+            <div className="schedule-next-game__details">
+              <span>{nextGame.date}</span>
+              <span aria-hidden="true">·</span>
+              <span>{nextGame.time}</span>
+              <span aria-hidden="true">·</span>
+              <span>{nextGame.location}</span>
+            </div>
+          </div>
+        )}
+      </section>
+      <section className="page schedule-page">
+        <div className="schedule-section-heading">
+          <h2>{content['schedule.practice_heading']}</h2>
+        </div>
+        <div className="schedule-semester-row">
+          <span className="schedule-semester">{content['schedule.practice_semester']}</span>
+        </div>
+        <table className="practice-table">
           <thead>
             <tr>
-              <th>Day</th>
-              <th>Time</th>
-              <th>Location</th>
+              <th scope="col">Day</th>
+              <th scope="col">Time</th>
+              <th scope="col">Place</th>
             </tr>
           </thead>
           <tbody>
             {practices.map((practice) => (
               <tr key={practice.id}>
-                <td>{practice.day}</td>
+                <td className="practice-table__day">{practice.day}</td>
                 <td>{practice.time}</td>
                 <td>{practice.location}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
 
-      <h2>{content['schedule.game_heading']}</h2>
-      <div className="schedule-table-wrapper">
-        <table className="schedule-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Opponent</th>
-              <th>Home/Away</th>
-              <th>Time</th>
-              <th>Location</th>
-              <th>Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            {games.map((game) => (
-              <tr key={game.id}>
-                <td>{game.date}</td>
-                <td>{game.opponent}</td>
-                <td>{game.is_home ? 'Home' : 'Away'}</td>
-                <td>{game.time}</td>
-                <td>{game.location}</td>
-                <td>
-                  <span className={statusClass(game.status)}>
-                    {game.status === 'Upcoming' ? 'Upcoming' : `${game.status} ${game.score}`}
-                  </span>
-                </td>
+        <div className="schedule-section-heading">
+          <h2>{content['schedule.game_heading']}</h2>
+        </div>
+        <div className="schedule-semester-row">
+          <span className="schedule-semester">{content['schedule.game_semester']}</span>
+        </div>
+        <div className="schedule-table-wrapper schedule-table-wrapper--navy">
+          <table className="practice-table practice-table--games">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Opponent</th>
+                <th>Home/Away</th>
+                <th>Time</th>
+                <th>Location</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+            </thead>
+            <tbody>
+              {games.map((game) => (
+                <tr className={game.is_home ? 'practice-table__home-row' : undefined} key={game.id}>
+                  <td>{game.date}</td>
+                  <td>{game.opponent}</td>
+                  <td>{game.is_home ? 'Home' : 'Away'}</td>
+                  <td>{game.time}</td>
+                  <td>{game.location}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </>
   )
 }
 

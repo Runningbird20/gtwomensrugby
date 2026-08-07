@@ -1,12 +1,95 @@
 .page h2 {
-  margin-top: 3rem;
+ margin-top: 50px;
+ text-align: center;
+
+}
+
+/* Full-bleed action photo across the top of the page, like the About page. */
+.schedule-hero {
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 50vh;
+  background: url('/schedule-bg.jpg') 65% 25% / cover no-repeat;
+}
+
+/* Navy wash so the white header nav stays readable over the photo. */
+.schedule-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(5, 30, 57, 0.331);
+}
+
+/* Extra top clearance so the Practice heading clears the card straddling the seam above. */
+.page.schedule-page {
+  padding-top: 5rem;
+}
+
+/* Sits flush with the bottom of the hero photo, then drops half its own
+   height below that edge — same overflow trick as .hero__slogan on the
+   home page, so it straddles the photo and the page content beneath it. */
+.schedule-next-game {
+  position: relative;
+  z-index: 1;
+  transform: translateY(50%);
+  width: min(560px, calc(100% - 3rem));
+  padding: 2rem 1.5rem;
+  border-radius: var(--radius-card);
+  background: var(--gt-navy);
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .page.schedule-page {
+    padding-top: 4.5rem;
+  }
+
+  .schedule-next-game {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+.schedule-next-game__label {
+  color: var(--gt-gold);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+/* Higher specificity than the global `.page h2` rule so the frosted card
+   controls its own heading spacing/color instead of inheriting it. */
+.schedule-next-game .schedule-next-game__opponent {
+  color: var(--gt-diploma);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin: 0 0 0.75rem;
+}
+
+.schedule-next-game__details {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  color: rgba(249, 246, 229, 0.75);
+  font-size: 1rem;
+}
+
+.schedule-semester-row {
+  text-align: center;
 }
 
 .schedule-table-wrapper {
   overflow-x: auto;
   margin-top: 1.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
 }
 
 .schedule-table {
@@ -17,50 +100,56 @@
 
 .schedule-table th,
 .schedule-table td {
-  padding: 0.85rem 1rem;
+  padding: 1rem 1.25rem;
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   border-bottom: 1px solid var(--color-border);
   white-space: nowrap;
 }
 
+:where(.schedule-table thead th) {
+  color: var(--color-nav-text);
+}
+
 .schedule-table thead th {
   background: var(--color-nav-bg);
-  color: var(--color-nav-text);
   font-family: var(--font-heading);
   font-weight: 500;
-  font-size: 0.8rem;
-  letter-spacing: 0.03em;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .schedule-table tbody tr:last-child td {
   border-bottom: none;
 }
 
+.schedule-table tbody tr {
+  transition: background-color var(--motion-fast);
+}
+
 .schedule-table tbody tr:hover {
   background: var(--color-bg-alt);
 }
 
-.schedule-badge {
-  display: inline-block;
-  padding: 0.25rem 0.65rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 500;
+/* Navy-themed game table: same frosted look as the practice table, with a
+   scroll wrapper for the five columns on small screens. */
+.schedule-table-wrapper--navy {
+  margin-top: 1.75rem;
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
 }
 
-.schedule-badge--win {
-  background: rgba(6, 96, 52, 0.12);
-  color: var(--gt-tech-lawn);
+.practice-table--games {
+  margin-top: 0;
+  min-width: 720px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-.schedule-badge--loss {
-  background: rgba(217, 3, 104, 0.12);
-  color: var(--gt-azalea);
-}
-
-.schedule-badge--upcoming {
-  background: rgba(179, 144, 81, 0.15);
-  color: var(--gt-dark-gold);
+.practice-table--games th,
+.practice-table--games td {
+  white-space: nowrap;
 }

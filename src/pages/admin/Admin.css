@@ -72,7 +72,7 @@
 }
 
 .admin-layout__link:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(249, 246, 229, 0.08);
   text-decoration: none;
 }
 
@@ -127,6 +127,29 @@
   gap: 1.25rem;
   align-items: flex-start;
   background: var(--color-bg);
+}
+
+.admin-card--dragging {
+  opacity: 0.45;
+  border-style: dashed;
+  border-color: var(--gt-dark-gold);
+}
+
+.admin-card__drag {
+  align-self: center;
+  flex-shrink: 0;
+  padding: 0.4rem 0.2rem;
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+}
+
+.admin-card__drag:active {
+  cursor: grabbing;
 }
 
 .admin-card__photo {
@@ -332,33 +355,105 @@
   font-size: 0.9rem;
 }
 
-.admin-inline-select {
-  border: none;
-  background: transparent;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  border-radius: 2px;
-}
-
-.admin-inline-select:hover,
-.admin-inline-select:focus-visible {
-  background: rgba(255, 255, 255, 0.3);
-  outline: none;
-}
-
-.admin-inline-score {
-  margin-left: 0.4rem;
-}
-
 .admin-carousel-item button {
   position: absolute;
   top: 0.4rem;
   right: 0.4rem;
-  background: rgba(5, 30, 57, 0.8);
+  background: var(--gt-navy);
   color: #fff;
   border: none;
   border-radius: 4px;
   padding: 0.3rem 0.5rem;
   font-size: 0.75rem;
+}
+
+.photo-cropper__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(5, 30, 57, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.photo-cropper {
+  background: var(--gt-diploma);
+  border-radius: var(--radius-card);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  padding: 1.5rem 1.75rem;
+  width: min(760px, 100%);
+}
+
+.photo-cropper h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.2rem;
+}
+
+.photo-cropper__queue {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.photo-cropper__hint {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.photo-cropper__viewport {
+  overflow: hidden;
+  background: #0a1420;
+  border-radius: 12px;
+  padding: 36px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.photo-cropper__viewport--dragging {
+  cursor: grabbing;
+}
+
+.photo-cropper__frame {
+  position: relative;
+  width: 100%;
+}
+
+.photo-cropper__img {
+  position: absolute;
+  max-width: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* The giant box-shadow dims everything outside the rounded frame, so the
+   crisp area is exactly what the public page will show. */
+.photo-cropper__mask {
+  position: absolute;
+  inset: 0;
+  box-shadow: 0 0 0 9999px rgba(10, 20, 32, 0.78);
+  border: 1px dashed rgba(249, 246, 229, 0.65);
+  pointer-events: none;
+}
+
+.photo-cropper__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1.1rem;
+}
+
+.photo-cropper__zoom {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.photo-cropper__zoom input {
+  flex: 1;
 }

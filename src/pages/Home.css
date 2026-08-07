@@ -1,61 +1,127 @@
-.home-practice {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: left;
+.hero {
+  --hero-scroll: 0;
+
+  position: relative;
+  background: var(--gt-diploma);
+  color: var(--gt-navy);
+  text-align: center;
+  overflow: visible;
 }
 
-.home-practice__list {
-  list-style: none;
-  margin: 1.5rem 0;
-  padding: 0;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: var(--color-bg);
-  overflow: hidden;
+.hero__photo {
+  position: relative;
+  z-index: 2;
+  background-image: url('/hero-bg.jpg');
+  background-size: 140%;
+  background-position: 65% 50%;
+  min-height: 60vh;
+  padding: clamp(6rem, 14vw, 10rem) 1.5rem clamp(3rem, 6vw, 5rem);
+  margin-bottom: 30px;
+  overflow: visible;
 }
 
-.home-practice__list li {
+/* Navy wash over the photo: dark enough for text at load, and deepens to
+   solid navy as the visitor scrolls (driven by --hero-scroll from Home.tsx). */
+.hero__photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 30, 57, 0.808);
+  opacity: calc(0.6 + 0.4 * var(--hero-scroll));
+  pointer-events: none;
+}
+
+/* Spatial fade at the bottom edge so the photo always blends into the
+   carousel below it, even before any scrolling happens. */
+.hero__photo::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgb(249 246 229 / 0%), rgb(249 246 229 / 50%),  
+ rgb(249 246 229 / 80%), var(--gt-diploma));
+  pointer-events: none;
+}
+
+.hero__slogan {
+  position: relative;
+  top: 250px;
+  z-index: 2;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  padding: 0.85rem 1.25rem;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 0.9rem;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.92;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 24px rgba(5, 30, 57, 0.6));
 }
 
-.home-practice__list li:last-child {
-  border-bottom: none;
+.hero__slogan-line {
+  font-family: var(--font-slogan);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-.home-practice__day {
-  font-weight: 700;
-  color: var(--color-heading);
-  min-width: 90px;
+.hero__slogan-line--solid {
+  color: var(--gt-navy);
+  font-size: clamp(4.5rem, 13vw, 8.5rem);
 }
 
-.home-practice__time {
+.hero__slogan-line--outline {
   color: var(--gt-dark-gold);
-  font-weight: 500;
+  font-size: clamp(3.5rem, 10vw, 7rem);
 }
 
-.home-practice__location {
-  color: var(--color-text-muted);
+.hero__carousel {
+  position: relative;
+  z-index: 1;
+  margin-top: 60px;
+  background: var(--gt-diploma);
 }
 
-.home-practice__link {
-  display: inline-block;
-  font-weight: 500;
-  font-size: 0.9rem;
+.hero__badge {
+  position: absolute;
+  right: -0.5rem;
+  bottom: -1.5rem;
+  width: 90px;
+  height: 90px;
+}
+
+@media (max-width: 640px) {
+  .hero__badge {
+    display: none;
+  }
+}
+
+.home-dark {
+  background: var(--gt-navy);
+  color: var(--gt-white);
+  padding: clamp(3rem, 6vw, 5rem) 1.5rem;
+}
+
+.home-below {
+  background: var(--color-bg);
+}
+
+/* Practice section matches the carousel width above it (1080px). */
+.home-practice {
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .home-motivation {
-  max-width: 42rem;
-  margin: 3rem auto 0;
-  padding: 1.5rem;
-  border-left: 4px solid var(--gt-gold);
-  background: var(--color-bg-alt);
+  max-width: 40rem;
+  margin: var(--space-section) auto 0;
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.35;
   color: var(--color-heading);
-  text-align: left;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  padding: 0rem ;
 }

@@ -49,10 +49,11 @@ function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<AdminPeople section="coach" title="Coaches" />} />
-        <Route path="coaches" element={<AdminPeople section="coach" title="Coaches" />} />
-        <Route path="exec-board" element={<AdminPeople section="exec_board" title="Executive Board" />} />
-        <Route path="alumni" element={<AdminAlumni />} />
+        <Route index element={<AdminPeople key="coach" section="coach" title="Coaches" />} />
+        <Route path="coaches" element={<AdminPeople key="coach" section="coach" title="Coaches" />} />
+        <Route path="exec-board" element={<AdminPeople key="exec_board" section="exec_board" title="Executive Board" />} />
+        <Route path="founders" element={<AdminAlumni key="founder" section="founder" title="Founders" />} />
+        <Route path="other-alumni" element={<AdminAlumni key="other" section="other" title="Other Alumni" />} />
         <Route path="practices" element={<AdminPractices />} />
         <Route path="games" element={<AdminGames />} />
         <Route path="carousel" element={<AdminCarousel />} />

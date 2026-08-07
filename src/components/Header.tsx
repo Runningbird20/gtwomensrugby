@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import './Header.css'
 
 const navItems = [
@@ -13,12 +14,33 @@ const alumniSubItems = [
 ]
 
 function Header() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        // Past the opening photo section (roughly half a viewport tall).
+        setScrolled(window.scrollY > window.innerHeight * 0.5)
+      })
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
-    <header className="site-header">
+    <header className={scrolled ? 'site-header site-header--scrolled' : 'site-header'}>
       <div className="site-header__inner">
         <NavLink to="/" className="site-header__brand">
-          GT Women's Rugby
+          <span className="site-header__brand-text">GT Women's Rugby</span>
+          <img className="site-header__brand-logo" src="/logo-bee.png" alt="" />
         </NavLink>
+
         <nav className="site-nav">
           {navItems.map((item) => (
             <NavLink
@@ -60,6 +82,10 @@ function Header() {
               ))}
             </ul>
           </div>
+
+          <Link className="site-nav__cta" to="/contact">
+            Join the Team
+          </Link>
         </nav>
       </div>
     </header>

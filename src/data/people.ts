@@ -5,6 +5,10 @@ export interface Person {
   role: string
   photo_url: string | null
   sort_order: number
+  position: string | null
+  school_year: string | null
+  major: string | null
+  bio: string | null
 }
 
 export const coachRoles = ['Head Coach', 'Assistant Coach']
@@ -28,6 +32,10 @@ export const defaultCoaches: Person[] = coachRoles.map((role, index) => ({
   role,
   photo_url: null,
   sort_order: index,
+  position: null,
+  school_year: null,
+  major: null,
+  bio: null,
 }))
 
 export const defaultExecBoard: Person[] = execBoardRoles.map((role, index) => ({
@@ -37,4 +45,8 @@ export const defaultExecBoard: Person[] = execBoardRoles.map((role, index) => ({
   role,
   photo_url: null,
   sort_order: index,
+  position: null,
+  school_year: null,
+  major: null,
+  bio: null,
 }))

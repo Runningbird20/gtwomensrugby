@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Brush King';
+  src: url('./assets/fonts/BrushKing.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  
+}
+
 :root {
   /* Core colors */
   --gt-gold: #b39051;
@@ -17,7 +26,7 @@
   --gt-whistle: #660064;
 
   /* Semantic aliases */
-  --color-bg: var(--gt-white);
+  --color-bg: var(--gt-diploma);
   --color-bg-alt: var(--gt-diploma);
   --color-text: #1a1a1a;
   --color-text-muted: #555555;
@@ -26,12 +35,24 @@
   --color-accent-hover: var(--gt-dark-gold);
   --color-nav-bg: var(--gt-navy);
   --color-nav-text: var(--gt-white);
-  --color-border: rgba(5, 30, 57, 0.12);
+  --color-border: rgba(5, 30, 57, 0.1);
 
-  --font-heading: 'Roboto Slab', Georgia, serif;
-  --font-body: 'Roboto', Arial, sans-serif;
+  --font-heading: 'Roboto Slab Variable', 'Roboto Slab', Georgia, serif;
+  --font-body: 'Roboto Variable', 'Roboto', Arial, sans-serif;
+  --font-slogan: 'Brush King', var(--font-heading);
+  --font-display: 'Oswald Variable', 'Oswald', 'Arial Narrow', sans-serif;
+
+  /* Layout tokens */
+  --radius-card: 18px;
+  --radius-btn: 10px;
+  --shadow-card: 0 16px 40px -20px rgba(5, 30, 57, 0.25);
+  --shadow-card-hover: 0 20px 48px -18px rgba(5, 30, 57, 0.32);
+  --space-section: clamp(3.5rem, 8vw, 7rem);
+  --motion-fast: 180ms ease;
+  --motion-base: 260ms ease;
 
   font-family: var(--font-body);
+  font-size: 17px;
   color: var(--color-text);
   background: var(--color-bg);
   font-synthesis: none;
@@ -47,6 +68,7 @@
 body {
   margin: 0;
   min-height: 100vh;
+  background: var(--gt-diploma);
 }
 
 #root {
@@ -62,32 +84,35 @@ h4 {
   font-family: var(--font-heading);
   color: var(--color-heading);
   margin: 0 0 0.5em;
+  line-height: 1.15;
+  text-align: center;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: clamp(2.1rem, 4vw, 2.75rem);
   font-weight: 700;
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
   font-weight: 700;
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 500;
   color: var(--gt-dark-gold);
 }
 
 p {
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0 0 1em;
 }
 
 a {
   color: var(--gt-dark-gold);
   text-decoration: none;
+  transition: color var(--motion-fast);
 }
 
 a:hover {
@@ -99,21 +124,89 @@ button {
   cursor: pointer;
 }
 
+:focus-visible {
+  outline: 2px solid var(--gt-gold);
+  outline-offset: 2px;
+}
+
 .schedule-section-heading {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: center;
   gap: 0.75rem;
-  margin-top: 3rem;
+  margin-top: 50px;
 }
 
 .schedule-section-heading h2 {
   margin-top: 0;
+  text-align: center;
 }
 
 .schedule-semester {
   color: var(--gt-dark-gold);
   font-weight: 500;
   font-size: 0.85rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+/* Solid navy practice table, shared by the Home and Schedule pages. */
+.practice-table {
+  width: 100%;
+  margin-top: 1.75rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--gt-navy);
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+}
+
+.practice-table th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--gt-gold);
+  padding: 1.1rem 1.75rem;
+  border-bottom: 1px solid rgba(179, 144, 81, 0.35);
+}
+
+.practice-table td {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  letter-spacing: 0.03em;
+  text-align: center;
+  color: var(--gt-diploma);
+  padding: 1.05rem 1.75rem;
+  border-bottom: 1px solid rgba(249, 246, 229, 0.08);
+}
+
+.practice-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.practice-table__day {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Higher specificity than `.practice-table td` so the fill wins. Away rows
+   get no override — they stay the table's normal navy/cream default. */
+.practice-table .practice-table__home-row td {
+  background: var(--gt-gold);
+  color: var(--gt-navy);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .practice-table th,
+  .practice-table td {
+    padding: 0.8rem 1rem;
+  }
 }

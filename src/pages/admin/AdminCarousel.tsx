@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../utils/supabase'
+import PhotoCropper from './PhotoCropper'
 import './Admin.css'
 
 interface CarouselFile {
@@ -34,14 +35,31 @@ function AdminCarousel() {
     load()
   }, [])
 
-  const handleUpload = async (fileList: FileList) => {
-    for (const file of Array.from(fileList)) {
-      const path = `${Date.now()}-${file.name}`
-      const { error } = await supabase.storage.from('carousel-photos').upload(path, file)
-      if (error) setStatus(`Error uploading ${file.name}: ${error.message}`)
-    }
-    setStatus('Upload complete.')
-    load()
+  const [pending, setPending] = useState<File[]>([])
+  const [pendingTotal, setPendingTotal] = useState(0)
+
+  const handlePick = (fileList: FileList) => {
+    const picked = Array.from(fileList)
+    setPending(picked)
+    setPendingTotal(picked.length)
+  }
+
+  const advanceQueue = () => {
+    setPending((queue) => {
+      const rest = queue.slice(1)
+      if (rest.length === 0) load()
+      return rest
+    })
+  }
+
+  const handleCroppedUpload = async (blob: Blob) => {
+    const base = pending[0]?.name.replace(/\.[^.]+$/, '') || 'photo'
+    const path = `${Date.now()}-${base}.jpg`
+    const { error } = await supabase.storage
+      .from('carousel-photos')
+      .upload(path, blob, { contentType: 'image/jpeg' })
+    setStatus(error ? `Error uploading ${base}: ${error.message}` : 'Upload complete.')
+    advanceQueue()
   }
 
   const handleDelete = async (name: string) => {
@@ -80,8 +98,23 @@ function AdminCarousel() {
         type="file"
         accept="image/*"
         multiple
-        onChange={(e) => e.target.files && handleUpload(e.target.files)}
+        onChange={(e) => {
+          if (e.target.files?.length) handlePick(e.target.files)
+          e.target.value = ''
+        }}
       />
+
+      {pending.length > 0 && (
+        <PhotoCropper
+          key={`${pending[0].name}-${pending.length}`}
+          file={pending[0]}
+          aspect={16 / 9}
+          cornerRadius={28 / 1080}
+          queueLabel={pendingTotal > 1 ? `(${pendingTotal - pending.length + 1} of ${pendingTotal})` : undefined}
+          onSave={handleCroppedUpload}
+          onCancel={advanceQueue}
+        />
+      )}
 
       {status && <p className="admin-status">{status}</p>}
     </section>

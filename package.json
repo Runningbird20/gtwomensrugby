@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/oswald": "^5.2.8",
+    "@fontsource-variable/roboto": "^5.2.10",
+    "@fontsource-variable/roboto-slab": "^5.2.8",
     "@supabase/supabase-js": "^2.110.6",
+    "modern-normalize": "^3.0.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.1"

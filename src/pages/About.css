@@ -1,43 +1,203 @@
+.about-statement {
+  position: relative;
+  background: url('/about-us-bg.JPG') center 45% / cover no-repeat;
+  padding: var(--space-section) 1.5rem;
+  text-align: center;
+  overflow: hidden;
+  min-height: 50vh;
+  background-position: 65% 55%;
+}
+
+/* Navy wash over the photo so the statement text stays readable. */
+.about-statement::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(5, 30, 57, 0.331);
+}
+
 .page h2 {
-  margin-top: 3rem;
-}
-
-.people-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.people-card {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 1.25rem;
   text-align: center;
 }
 
+/* Tighter gap between the marquee above and the About Us heading. */
+.page.about-page {
+  padding-top: 2rem;
+}
+
+.about-page h1 {
+  text-align: center;
+
+}
+
+.about-intro {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Standard card size: one third of the row (matching the Executive Board
+   grid). Rows that aren't full — like the two coaches — center themselves. */
+.people-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.people-grid > * {
+  flex: 0 0 calc((100% - 3rem) / 3);
+}
+
+@media (max-width: 800px) {
+  .people-grid > * {
+    flex-basis: calc((100% - 1.5rem) / 2);
+  }
+}
+
+@media (max-width: 520px) {
+  .people-grid > * {
+    flex-basis: 100%;
+  }
+}
+
+.people-flip {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  perspective: 1000px;
+  height: 320px;
+}
+
+.people-flip__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease, translate var(--motion-base);
+  transform-style: preserve-3d;
+}
+
+/* Flip on hover (mouse) and focus-visible (keyboard); un-flips as soon as
+   the pointer leaves or focus moves on, no click needed. */
+.people-flip:hover .people-flip__inner,
+.people-flip:focus-visible .people-flip__inner {
+  translate: 0 -4px;
+  transform: rotateY(180deg);
+}
+
+.people-card {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--gt-navy);
+  border: 1px solid rgba(179, 144, 81, 0.35);
+  border-radius: var(--radius-card);
+  box-shadow: 0 8px 28px -12px rgba(0, 0, 0, 0.45);
+  text-align: center;
+  transition: box-shadow var(--motion-base);
+}
+
+.people-flip:hover .people-card {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.people-card--back {
+  transform: rotateY(180deg);
+  padding: 1.75rem 1.5rem;
+}
+
+.people-card__meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.people-card__meta {
+  font-size: 0.9rem;
+  color: rgba(249, 246, 229, 0.85);
+  
+}
+
+.people-card__meta--center {
+  display: block;
+  text-align: center;
+  margin-top: 0.6rem;
+}
+
+.people-card__fact-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gt-gold);
+  margin-bottom: 0.1rem;
+  margin-top:1rem;
+}
+
+.people-hint {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* Front face: photo fills the whole card, name/role overlaid at the bottom. */
+.people-card--front {
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
 .people-card__photo {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 1rem;
-  border-radius: 50%;
-  background: var(--color-bg-alt);
-  border: 2px solid var(--color-border);
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
 
+.people-card__photo--placeholder {
+  background: var(--color-bg-alt);
+}
+
+.people-card__overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 2.5rem 1.25rem 1.25rem;
+  background: linear-gradient(to top, rgba(5, 30, 57, 0.92) 0%, rgba(5, 30, 57, 0.55) 60%, rgba(5, 30, 57, 0) 100%);
+}
+
 .people-card__name {
   margin-bottom: 0.25rem;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
+  color: var(--gt-diploma);
+}
+
+.people-card-flipped__name{
+  height:20px;
+  font-size: 1.1rem;
+  color: var(--gt-diploma);
+
 }
 
 .people-card__role {
-  color: var(--gt-dark-gold);
+  color: var(--gt-gold);
   font-weight: 500;
   font-size: 0.8rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   margin: 0;
 }
