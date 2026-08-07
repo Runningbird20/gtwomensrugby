@@ -36,7 +36,7 @@ const emptyDraft = {
   favorite_color: '#B39051',
 }
 
-function AdminAlumni({ section, title }: { section: 'founder' | 'other'; title: string }) {
+function AdminAlumni() {
   const [alumni, setAlumni] = useState<AlumniProfile[]>([])
   const [loading, setLoading] = useState(true)
   const [status, setStatus] = useState<string | null>(null)
@@ -46,19 +46,14 @@ function AdminAlumni({ section, title }: { section: 'founder' | 'other'; title: 
 
   const load = async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('alumni')
-      .select('*')
-      .eq('section', section)
-      .order('sort_order', { ascending: true })
+    const { data, error } = await supabase.from('alumni').select('*').order('sort_order', { ascending: true })
     if (!error && data) setAlumni(data as AlumniProfile[])
     setLoading(false)
   }
 
   useEffect(() => {
     load()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [section])
+  }, [])
 
   const handleAdd = async () => {
     if (!draft.name.trim()) return
@@ -72,7 +67,7 @@ function AdminAlumni({ section, title }: { section: 'founder' | 'other'; title: 
       }
     }
 
-    const { error } = await supabase.from('alumni').insert({ ...draft, section, photo_url, sort_order: alumni.length })
+    const { error } = await supabase.from('alumni').insert({ ...draft, photo_url, sort_order: alumni.length })
     if (error) {
       setStatus(`Error adding: ${error.message}`)
       return
@@ -111,7 +106,7 @@ function AdminAlumni({ section, title }: { section: 'founder' | 'other'; title: 
 
   return (
     <section className="admin-section">
-      <h1>{title}</h1>
+      <h1>Alumni</h1>
       <p className="admin-section__hint">Front of card shows photo, name, and years played. Class, position, and bio show on the flip side.</p>
 
       {loading ? (

@@ -5,8 +5,7 @@ import './Admin.css'
 const adminNavItems = [
   { label: 'Coaches', to: '/admin/coaches' },
   { label: 'Executive Board', to: '/admin/exec-board' },
-  { label: 'Founders', to: '/admin/founders' },
-  { label: 'Other Alumni', to: '/admin/other-alumni' },
+  { label: 'Alumni', to: '/admin/alumni' },
   { label: 'Practice Schedule', to: '/admin/practices' },
   { label: 'Game Schedule', to: '/admin/games' },
   { label: 'Carousel Photos', to: '/admin/carousel' },

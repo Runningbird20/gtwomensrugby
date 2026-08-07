@@ -26,8 +26,7 @@ function AlumniGrid({ alumni }: { alumni: AlumniProfile[] }) {
 }
 
 function Alumni() {
-  const founders = useAlumniProfiles('founder')
-  const otherAlumni = useAlumniProfiles('other')
+  const alumni = useAlumniProfiles()
 
   return (
     <>
@@ -35,14 +34,9 @@ function Alumni() {
       <Marquee text="Est. 2006" variant="navy" />
       <section className="page alumni-page">
         <h1>Alumni</h1>
-        <p>Celebrating former players and staying connected with the GT Women's Rugby alumni network.</p>
-        <p className="alumni-hint">Click a card to flip it and read where they are now.</p>
+        <p className="alumni-intro">Celebrating former players and staying connected with the GT Women's Rugby alumni network.</p>
 
-        <h2>Founders</h2>
-        <AlumniGrid alumni={founders} />
-
-        <h2>Other Alumni</h2>
-        <AlumniGrid alumni={otherAlumni} />
+        <AlumniGrid alumni={alumni} />
       </section>
     </>
   )

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../utils/supabase'
-import { defaultFounders, defaultOtherAlumni, type AlumniProfile } from '../data/alumniProfiles'
+import { defaultAlumniProfiles, type AlumniProfile } from '../data/alumniProfiles'
 
-export function useAlumniProfiles(section: 'founder' | 'other') {
-  const fallback = section === 'founder' ? defaultFounders : defaultOtherAlumni
-  const [alumni, setAlumni] = useState<AlumniProfile[]>(fallback)
+export function useAlumniProfiles() {
+  const [alumni, setAlumni] = useState<AlumniProfile[]>(defaultAlumniProfiles)
 
   useEffect(() => {
     let cancelled = false
@@ -12,7 +11,6 @@ export function useAlumniProfiles(section: 'founder' | 'other') {
     supabase
       .from('alumni')
       .select('*')
-      .eq('section', section)
       .order('sort_order', { ascending: true })
       .then(({ data, error }) => {
         if (cancelled) return
@@ -24,8 +22,7 @@ export function useAlumniProfiles(section: 'founder' | 'other') {
     return () => {
       cancelled = true
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [section])
+  }, [])
 
   return alumni
 }
